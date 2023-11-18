@@ -7,7 +7,7 @@
     - home: /home/diego
     - github_username: diegoaldarondo
     - ssh_key: ~/.ssh/id_25519
-    - ssh_key_pub: {{ ssh_key }}.pub
+    - ssh_key_pub: ~/.ssh/id_25519.pub
 
     tasks:
       - name: install packages

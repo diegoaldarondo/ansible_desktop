@@ -8,6 +8,9 @@ sudo apt install -y git ansible
 # Set email address for the SSH key
 email="diegoaldarondo@gmail.com" # Replace with your email address
 
+git config --global user.email "$email"
+git config --global user.name "Diego Aldarondo"
+
 # Check for existing SSH keys
 echo "Checking for existing SSH keys..."
 if [ -f "$HOME/.ssh/id_ed25519" ] || [ -f "$HOME/.ssh/id_rsa" ]; then
