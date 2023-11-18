@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Install Ansible Desktop
+  hosts: localhost
   connection: local
   become: true
   vars:
