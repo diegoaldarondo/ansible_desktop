@@ -1,0 +1,13 @@
+[user]
+	email = diegoaldarondo@gmail.com
+	name = Diego Aldarondo
+[init]
+  defaultBranch = main
+[push]
+  default = current
+[alias]
+  pre = pull --rebase
+[merge]
+  ff = only
+[fetch]
+  prune = true

@@ -1,0 +1,13 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {"key": "ctrl+alt+up","command": "workbench.action.terminal.resizePaneUp"},
+    {"key": "ctrl+alt+down","command": "workbench.action.terminal.resizePaneDown"},
+    {"key": "ctrl+shift+alt+pageup","command": "workbench.action.terminal.resizePaneUp"},
+    {"key": "ctrl+shift+alt+pagedown","command": "workbench.action.terminal.resizePaneDown"},
+    { "key": "ctrl+z", "command": "-undo" },
+    { "key": "ctrl+z", "command": "undo", "when": "!notebookEditorFocused || inputFocus" },
+    { "key": "ctrl+shift+z", "command": "-redo" },
+    { "key": "ctrl+shift+z", "command": "redo", "when": "!notebookEditorFocused || inputFocus" },
+    { "key": "ctrl+y", "command": "-redo" },
+    { "key": "ctrl+y", "command": "redo", "when": "!notebookEditorFocused || inputFocus" },
+]

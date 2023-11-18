@@ -1,0 +1,27 @@
+{
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "editor.inlineSuggest.enabled": true,
+    "remote.SSH.connectTimeout": 60,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "remote.SSH.enableRemoteCommand": true,
+    "remote.SSH.serverInstallPath": {
+        "mujoco210~holy*": "~/.vscode-container/mujoco210",
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "oneDarkPro.vivid": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "oneDarkPro.editorTheme": "One Dark Pro Darker",
+    "markdown-preview-enhanced.mermaidTheme": "dark",
+    "markdown-preview-enhanced.previewTheme": "one-dark.css",
+    "markdown-preview-enhanced.codeBlockTheme": "one-dark.css",
+    "markdown-preview-enhanced.revealjsTheme": "night.css",
+    "window.menuBarVisibility": "toggle",
+    "glassit-linux.opacity": 95,
+    "window.zoomLevel": -1,
+    "zenMode.centerLayout": false
+}

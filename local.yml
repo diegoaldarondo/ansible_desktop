@@ -1,0 +1,86 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+  vars:
+    - user: diego
+    - home: /home/diego
+    - github_username: diegoaldarondo
+    - ssh_key: ~/.ssh/id_25519
+    - ssh_key_pub: {{ ssh_key }}.pub
+
+    tasks:
+      - name: install packages
+        package:
+          name: 
+            - htop
+            - tmux
+            - bat
+            - dconf-cli
+            - python3-psutil
+    
+      - name: copy wallpaper file
+        copy:
+          src: files/wallpaper.jpg
+          dest: /usr/share/backgrounds/ansible-wallpaper.jpg
+          owner: root
+          group: root
+
+      - name: set wallpaper
+        become_user: diego
+        dconf:
+          key: /org/gnome/desktop/background/picture-uri
+          value: 'file:///usr/share/backgrounds/ansible-wallpaper.jpg'
+      
+      - name: set wallpaper position
+        become_user: diego
+        dconf:
+          key: /org/gnome/desktop/background/picture-options
+          value: 'zoom'
+
+      - name: copy bashrc file
+        copy:
+          src: files/bash/.bashrc
+          dest: /home/diego/.bashrc
+          owner: diego
+          group: diego
+      
+      - name: copy bash aliases file
+        copy:
+          src: files/bash/.bash_aliases
+          dest: /home/diego/.bash_aliases
+          owner: diego
+          group: diego
+          
+      - name: copy .gitconfig file
+        copy:
+          src: files/git/.gitconfig
+          dest: /home/diego/.gitconfig
+          owner: diego
+          group: diego
+
+      - name: copy ssh config file
+        copy:
+          src: files/ssh/.ssh_config
+          dest: /home/diego/.ssh/config
+          owner: diego
+          group: diego
+
+      - name: copy vscode settings
+        copy:
+          src: files/vscode/settings.json
+          dest: /home/diego/.config/Code/User/settings.json
+          owner: diego
+          group: diego
+
+      - name: copy vscode keybindings
+        copy:
+          src: files/vscode/keybindings.json
+          dest: /home/diego/.config/Code/User/keybindings.json
+          owner: diego
+          group: diego
+
+      
+
+      
+      
