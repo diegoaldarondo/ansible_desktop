@@ -37,3 +37,15 @@ else
     echo
     cat "$HOME/.ssh/id_ed25519.pub" || cat "$HOME/.ssh/id_rsa.pub"
 fi
+
+KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
+
+# Check if GitHub is already in known_hosts
+if grep -q "github.com" "$KNOWN_HOSTS_FILE"; then
+    echo "GitHub is already in known_hosts."
+else
+    echo "Adding GitHub to known_hosts..."
+    ssh-keyscan -t rsa github.com >> "$KNOWN_HOSTS_FILE"
+fi
+
+echo "Done."
