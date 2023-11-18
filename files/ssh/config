@@ -1,0 +1,22 @@
+
+Host login.rc.fas.harvard.edu
+    HostName login.rc.fas.harvard.edu
+    User daldarondo
+    AddKeysToAgent yes
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    TCPKeepAlive no
+    ServerAliveInterval 30
+    ServerAliveCountMax 10
+    ControlPersist 24h
+
+Host holy*
+    HostName %h
+    ProxyJump login.rc.fas.harvard.edu
+    User daldarondo
+
+
+    # RemoteDirectory /n/holylabs/LABS/olveczky_lab/holylfs02/Diego/code/dm/
+    # HostKeyAlgorithms +ssh-rsa
+    # PubkeyAcceptedKeyTypes +ssh-rsa
+    # AddKeysToAgent yes
