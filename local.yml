@@ -29,14 +29,14 @@
     - name: set wallpaper
       become_user: diego
       dconf:
-        key: /org/gnome/desktop/background/picture-uri
-        value: 'file:///usr/share/backgrounds/ansible-wallpaper.jpg'
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
     
     - name: set wallpaper position
       become_user: diego
       dconf:
-        key: /org/gnome/desktop/background/picture-options
-        value: 'zoom'
+        key: "/org/gnome/desktop/background/picture-options"
+        value: "'zoom'"
 
     - name: copy bashrc file
       copy:
