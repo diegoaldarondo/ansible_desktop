@@ -61,7 +61,7 @@
 
     - name: copy ssh config file
       copy:
-        src: files/ssh/.ssh_config
+        src: files/ssh/config
         dest: /home/diego/.ssh/config
         owner: diego
         group: diego
