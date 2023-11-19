@@ -9,6 +9,7 @@
     - github_username: diegoaldarondo
     - ssh_key: "{{ home }}/.ssh/id_25519"
     - ssh_key_pub: "{{ home }}/.ssh/id_25519.pub"
+    - lazygit_dest: "{{ home }}/.local/bin/lazygit"
 
   tasks:
     - name: install packages
@@ -46,6 +47,40 @@
       ansible.builtin.debug:
         msg: "fzf installed successfully. Version: {{ fzf_version_check.stdout }}"
 
+    - name: Get the latest lazygit version
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/jesseduffield/lazygit/releases/latest
+        method: GET
+        return_content: yes
+      register: lazygit_release
+
+    - name: Download lazygit tar.gz
+      ansible.builtin.get_url:
+        url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_release.json.tag_name | regex_replace('^v', '') }}_Linux_x86_64.tar.gz"
+        dest: "/tmp/lazygit.tar.gz"
+        mode: '0755'
+
+    - name: Extract lazygit from tar.gz
+      ansible.builtin.unarchive:
+        src: "/tmp/lazygit.tar.gz"
+        dest: "/tmp"
+        remote_src: yes
+        extra_opts: [--strip-components=1]
+
+    - name: Install lazygit binary
+      ansible.builtin.copy:
+        src: "/tmp/lazygit"
+        dest: "{{ lazygit_dest }}"
+        mode: '0755'
+        remote_src: yes
+
+    - name: Remove temporary files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "/tmp/lazygit.tar.gz"
+        - "/tmp/lazygit"
 
     - name: copy wallpaper file
       copy:
