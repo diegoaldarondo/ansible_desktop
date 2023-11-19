@@ -28,6 +28,7 @@
           - git
           - tealdeer
           - flatpak
+          - pipx
     
     - name: Setup flatpak
       ansible.builtin.command:
