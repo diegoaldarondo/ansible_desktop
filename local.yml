@@ -29,6 +29,7 @@
           - tealdeer
           - flatpak
           - pipx
+          - docker
     
     - name: Setup flatpak
       ansible.builtin.command:
