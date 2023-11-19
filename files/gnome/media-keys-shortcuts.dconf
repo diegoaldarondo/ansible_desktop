@@ -1,0 +1,29 @@
+[/]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']
+rotate-video-lock-static=@as []
+terminal=['<Super>t']
+
+[custom-keybindings/custom0]
+binding='<Control><Alt>t'
+command='gnome-terminal'
+name='Terminal'
+
+[custom-keybindings/custom1]
+binding='<Control><Alt>o'
+command='sh /home/diego/Documents/code/scripts/two_factor.sh'
+name='oauth'
+
+[custom-keybindings/custom3]
+binding='<Control><Alt>r'
+command='gnome-terminal -- bash -c "source ~/.bash_aliases; rc;"'
+name='RC connection'
+
+[custom-keybindings/custom4]
+binding='<Control><Alt>v'
+command='gnome-terminal -- bash -c "source /home/diego/Documents/code/RCvscode.sh; rcode"'
+name='RC vscode'
+
+[custom-keybindings/custom5]
+binding='<Control><Alt>n'
+command='bash -c "cd ~/notes; code ."'
+name='Note'
