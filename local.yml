@@ -5,10 +5,10 @@
   become: true
   vars:
     - user: diego
-    - home: /home/diego
+    - home: "/home/{{ user }}"
     - github_username: diegoaldarondo
-    - ssh_key: ~/.ssh/id_25519
-    - ssh_key_pub: ~/.ssh/id_25519.pub
+    - ssh_key: "{{ home }}/.ssh/id_25519"
+    - ssh_key_pub: "{{ home }}/.ssh/id_25519.pub"
 
   tasks:
     - name: install packages
@@ -19,7 +19,33 @@
           - bat
           - dconf-cli
           - python3-psutil
-  
+          - inkscape
+          - git
+
+    - name: Clone fzf repository
+      ansible.builtin.git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: "{{ home }}/.fzf"
+        version: master
+        depth: 1
+      register: clone_result
+
+    - name: Run fzf installation script
+      ansible.builtin.shell:
+        cmd: "{{ home }}/.fzf/install --all"
+      when: clone_result is changed
+
+    - name: Check fzf installation
+      ansible.builtin.command:
+        cmd: fzf --version
+      register: fzf_version_check
+      failed_when: fzf_version_check.rc != 0
+
+    - name: Display fzf installation version
+      ansible.builtin.debug:
+        msg: "fzf installed successfully. Version: {{ fzf_version_check.stdout }}"
+
+
     - name: copy wallpaper file
       copy:
         src: files/wallpaper.jpg
@@ -59,7 +85,7 @@
         dest: /home/diego/.gitconfig
         owner: diego
         group: diego
-
+ 
     - name: copy ssh config file
       copy:
         src: files/ssh/config
