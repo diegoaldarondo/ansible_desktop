@@ -72,7 +72,13 @@
       apt:
         deb: https://go.microsoft.com/fwlink/?LinkID=760868
         
-
+    - name: Ensure VSCode settings directory exists
+      file:
+        path: /home/diego/.config/Code/User
+        state: directory
+        owner: diego
+        group: diego
+        
     - name: copy vscode settings
       copy:
         src: files/vscode/settings.json
