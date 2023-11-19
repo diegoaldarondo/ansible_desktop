@@ -24,6 +24,13 @@
           - git
           - tealdeer
 
+    - name: Ensure .local/bin/exists
+      file:
+        path: "{{ home }}/.local/bin"
+        state: directory
+        owner: diego
+        group: diego
+
     - name: Clone fzf repository
       ansible.builtin.git:
         repo: https://github.com/junegunn/fzf.git
@@ -36,23 +43,6 @@
       ansible.builtin.shell:
         cmd: "{{ home }}/.fzf/install --all"
       when: clone_result is changed
-
-    - name: Check fzf installation
-      ansible.builtin.command:
-        cmd: "{{ home }}/.fzf/bin/fzf --version"
-      register: fzf_version_check
-      failed_when: fzf_version_check.rc != 0
-
-    - name: Display fzf installation version
-      ansible.builtin.debug:
-        msg: "fzf installed successfully. Version: {{ fzf_version_check.stdout }}"
-
-    - name: Ensure .local/bin/exists
-      file:
-        path: "{{ home }}/.local/bin"
-        state: directory
-        owner: diego
-        group: diego
 
     - name: Get the latest lazygit version
       ansible.builtin.uri:
@@ -70,7 +60,7 @@
     - name: Extract lazygit from tar.gz
       ansible.builtin.unarchive:
         src: "{{ home }}/.local/bin/lazygit.tar.gz"
-        dest: "{{ home }}/.local/bin/"
+        dest: "{{ home }}/.local/bin/lazygit"
         remote_src: yes
         extra_opts: [--strip-components=1]
 
