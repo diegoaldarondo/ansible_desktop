@@ -267,6 +267,7 @@
       loop:
         - gnome_terminal_settings.dconf
         - media-keys-shortcuts.dconf
+        - gnome_interface_settings.dconf
 
     - name: Load GNOME terminal settings
       become_user: "{{ user }}"
@@ -278,6 +279,10 @@
       ansible.builtin.shell:
         cmd: "cat /tmp/media-keys-shortcuts.dconf | dconf load /org/gnome/settings-daemon/plugins/media-keys/"
     
+    - name: Load GNOME interface settings
+      become_user: "{{ user }}"
+      ansible.builtin.shell:
+        cmd: "cat /tmp/gnome_interface_settings.dconf | dconf load /org/gnome/desktop/interface/"
 
       
 
