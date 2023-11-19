@@ -13,6 +13,7 @@
     - lazygit_dest: "{{ localbin }}/lazygit"
     - miniconda_script: "{{ home }}/miniconda.sh"
     - miniconda_install_dir: "{{ home }}/miniconda3"
+    - playbook_dir: "{{ home }}/ansible_desktop"
 
   tasks:
     - name: install packages
@@ -26,6 +27,18 @@
           - inkscape
           - git
           - tealdeer
+          - flatpak
+    
+    - name: Setup flatpak
+      ansible.builtin.command:
+        cmd: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+    
+    - name: Install flatpak packages
+      ansible.builtin.command:
+        cmd: "flatpak install -y flathub {{ item }}"
+      loop:
+        - com.spotify.Client
+        - com.slack.Slack
 
     - name: Make .local/bin
       file:
@@ -156,33 +169,42 @@
         state: absent
       when: not miniconda_stat.stat.exists
 
-    - name: copy bashrc file
-      copy:
-        src: files/bash/.bashrc
-        dest: /home/diego/.bashrc
+    - name: Create symlink for bashrc file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/bash/.bashrc"
+        dest: "{{ home }}/.bashrc"
         owner: "{{ user }}"
         group: "{{ user }}"
+        state: link
+        force: yes
     
-    - name: copy bash aliases file
-      copy:
-        src: files/bash/.bash_aliases
-        dest: /home/diego/.bash_aliases
+    - name: Create symlink for bash_aliases file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/bash/.bash_aliases"
+        dest: "{{ home }}/.bash_aliases"
         owner: "{{ user }}"
         group: "{{ user }}"
-        
-    - name: copy .gitconfig file
-      copy:
-        src: files/git/.gitconfig
-        dest: /home/diego/.gitconfig
+        state: link
+        force: yes
+
+    - name: Create symlink for .gitconfig file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/git/.gitconfig"
+        dest: "{{ home }}/.gitconfig"
         owner: "{{ user }}"
         group: "{{ user }}"
- 
-    - name: copy ssh config file
-      copy:
-        src: files/ssh/config
-        dest: /home/diego/.ssh/config
+        state: link
+        force: yes
+    
+    - name: Create symlink for .ssh config file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/ssh/config"
+        dest: "{{ home }}/.ssh/config"
         owner: "{{ user }}"
         group: "{{ user }}"
+        state: link
+        force: yes
+
 
     - name: Install vscode deb
       become: yes
@@ -227,19 +249,23 @@
         - zhuangtongfa.material-theme
       become: no
 
-    - name: copy vscode settings
-      copy:
-        src: files/vscode/settings.json
-        dest: /home/diego/.config/Code/User/settings.json
+    - name: Create symlink for vscode settings file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/vscode/settings.json"
+        dest: "/home/diego/.config/Code/User/settings.json"
         owner: "{{ user }}"
         group: "{{ user }}"
-
-    - name: copy vscode keybindings
-      copy:
-        src: files/vscode/keybindings.json
-        dest: /home/diego/.config/Code/User/keybindings.json
+        state: link
+        force: yes
+    
+    - name: Create symlink for vscode keybindings file
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/vscode/keybindings.json"
+        dest: "/home/diego/.config/Code/User/keybindings.json"
         owner: "{{ user }}"
         group: "{{ user }}"
+        state: link
+        force: yes
 
     - name: Copy GNOME settings files
       ansible.builtin.copy:
