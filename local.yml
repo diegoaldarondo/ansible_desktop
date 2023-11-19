@@ -59,7 +59,7 @@
         dest: /home/diego/.gitconfig
         owner: diego
         group: diego
-q
+
     - name: copy ssh config file
       copy:
         src: files/ssh/config
