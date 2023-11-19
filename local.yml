@@ -125,6 +125,7 @@
       register: repo_stat
 
     - name: Clone notes repository
+      become_user: diego
       ansible.builtin.git:
         repo: "git@github.com:diegoaldarondo/notes.git"
         dest: "{{ home }}/notes"
