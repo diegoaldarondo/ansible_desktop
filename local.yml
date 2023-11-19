@@ -67,6 +67,11 @@
         owner: diego
         group: diego
 
+    - name: Install vscode deb
+      become_user: diego
+      apt:
+        deb: https://go.microsoft.com/fwlink/?LinkID=760868
+        
     - name: copy vscode settings
       copy:
         src: files/vscode/settings.json
@@ -80,6 +85,7 @@
         dest: /home/diego/.config/Code/User/keybindings.json
         owner: diego
         group: diego
+
 
       
 
