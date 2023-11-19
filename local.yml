@@ -21,6 +21,7 @@
           - python3-psutil
           - inkscape
           - git
+          - tealdeer
 
     - name: Clone fzf repository
       ansible.builtin.git:
@@ -32,7 +33,7 @@
 
     - name: Run fzf installation script
       ansible.builtin.shell:
-        cmd: "{{ home }}/.fzf/install --all"
+        cmd: "{{ home }}/.fzf/install --all && source {{ home }}/.bashrc"
       when: clone_result is changed
 
     - name: Check fzf installation
