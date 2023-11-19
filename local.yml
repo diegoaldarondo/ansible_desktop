@@ -266,15 +266,12 @@
         dest: "/tmp/{{ item }}"
       loop:
         - gnome_terminal_settings.dconf
-        # Add other .dconf files as needed
 
-    - name: Load GNOME settings
-      ansible.builtin.command:
-        cmd: "dconf load /org/gnome/terminal/ < /tmp/gnome_terminal_settings.dconf"
-      loop:
-        - gnome_terminal_settings.dconf
-        # Add other .dconf files as needed
-
+    - name: Load GNOME terminal settings
+      become_user: diego
+      ansible.builtin.shell:
+        cmd: "cat /tmp/gnome_terminal_settings.dconf | dconf load /org/gnome/terminal/"
+    
 
       
 
