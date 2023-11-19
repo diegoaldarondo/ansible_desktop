@@ -1,0 +1,86 @@
+- name: Install Apptainer on Debian
+  hosts: localhost
+  become: yes
+  vars:
+    go_version: "1.19.6"
+    go_install_dir: "/usr/local/go"
+    apptainer_repo_url: "https://github.com/apptainer/apptainer.git"
+    apptainer_repo_dir: "~/apptainer"
+
+  tasks:
+    - name: Update apt repositories
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Apptainer dependencies
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - libseccomp-dev
+          - pkg-config
+          - uidmap
+          - squashfs-tools
+          - squashfuse
+          - fuse2fs
+          - fuse-overlayfs
+          - fakeroot
+          - cryptsetup
+          - curl
+          - wget
+          - git
+          - autoconf
+          - automake
+          - libtool
+          - pkg-config
+          - libfuse-dev
+          - zlib1g-dev
+        state: present
+
+    - name: Install Go
+      ansible.builtin.get_url:
+        url: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+        mode: '0755'
+
+    - name: Extract Go tarball
+      become: yes
+      ansible.builtin.unarchive:
+        src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+        dest: "/usr/local"
+        remote_src: yes
+
+    - name: Set Go path in user bashrc
+      become_user: diego
+      ansible.builtin.lineinfile:
+        path: "~/.bashrc"
+        line: 'export PATH=$PATH:{{ go_install_dir }}/bin'
+        create: yes
+
+    - name: Clone Apptainer repository
+      ansible.builtin.git:
+        repo: "{{ apptainer_repo_url }}"
+        dest: "{{ apptainer_repo_dir }}"
+        version: "main"
+
+    - name: Compile Apptainer
+      ansible.builtin.shell:
+        cmd: "./mconfig && cd $(/bin/pwd)/builddir && make"
+        chdir: "{{ apptainer_repo_dir }}"
+        executable: /bin/bash
+      environment:
+        PATH: "{{ go_install_dir }}/bin:{{ ansible_env.PATH }}"
+
+    - name: Install Apptainer
+      ansible.builtin.shell:
+        cmd: "make install"
+        chdir: "{{ apptainer_repo_dir }}/builddir"
+        executable: /bin/bash
+
+    - name: Verify Apptainer installation
+      ansible.builtin.command:
+        cmd: "apptainer --version"
+      register: apptainer_version
+
+    - name: Display Apptainer version
+      ansible.builtin.debug:
+        msg: "Apptainer installed successfully: {{ apptainer_version.stdout }}"
