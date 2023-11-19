@@ -62,7 +62,8 @@
         src: "{{ home }}/.local/bin/lazygit.tar.gz"
         dest: "{{ home }}/.local/bin"
         remote_src: yes
-        extra_opts: [--strip-components=1]
+        extra_opts: ["-xzvf"]
+
 
     - name: Remove temporary files
       ansible.builtin.file:
