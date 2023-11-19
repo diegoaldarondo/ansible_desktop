@@ -1,0 +1,29 @@
+[legacy]
+theme-variant='dark'
+
+[legacy/profiles:]
+default='8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '8f16f8a8-2aac-404f-a6fe-5bfe30e2abce', '8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0']
+
+[legacy/profiles:/:8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0]
+background-color='rgb(41,35,39)'
+bold-color-same-as-fg=true
+foreground-color='rgb(187,183,172)'
+palette=['rgb(23,20,33)', 'rgb(133,63,45)', 'rgb(95,112,97)', 'rgb(162,115,76)', 'rgb(38,70,116)', 'rgb(204,158,103)', 'rgb(40,79,106)', 'rgb(147,133,96)', 'rgb(94,92,100)', 'rgb(195,116,82)', 'rgb(114,134,105)', 'rgb(241,164,94)', 'rgb(72,97,91)', 'rgb(194,158,108)', 'rgb(53,79,102)', 'rgb(137,122,99)']
+use-theme-colors=false
+visible-name='sunset'
+
+[legacy/profiles:/:8f16f8a8-2aac-404f-a6fe-5bfe30e2abce]
+background-color='rgb(0,0,0)'
+foreground-color='rgb(208,207,204)'
+use-theme-colors=false
+visible-name='black'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+audible-bell=false
+background-color='rgb(35,39,46)'
+bold-is-bright=false
+foreground-color='rgb(161,168,181)'
+palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+use-theme-colors=false
+visible-name='atom-one-dark-pro'
