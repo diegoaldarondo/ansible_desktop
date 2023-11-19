@@ -47,6 +47,13 @@
       ansible.builtin.debug:
         msg: "fzf installed successfully. Version: {{ fzf_version_check.stdout }}"
 
+    - name: Ensure .local/bin/exists
+      file:
+        path: "{{ home }}/.local/bin"
+        state: directory
+        owner: diego
+        group: diego
+
     - name: Get the latest lazygit version
       ansible.builtin.uri:
         url: https://api.github.com/repos/jesseduffield/lazygit/releases/latest
