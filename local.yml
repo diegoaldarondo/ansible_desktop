@@ -156,25 +156,6 @@
         state: absent
       when: not miniconda_stat.stat.exists
 
-    - name: copy wallpaper file
-      copy:
-        src: files/wallpaper.jpg
-        dest: /usr/share/backgrounds/ansible-wallpaper.jpg
-        owner: "{{ user }}"
-        group: "{{ user }}"
-
-    - name: set wallpaper
-      become_user: "{{ user }}"
-      dconf:
-        key: "/org/gnome/desktop/background/picture-uri"
-        value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
-    
-    - name: set wallpaper position
-      become_user: "{{ user }}"
-      dconf:
-        key: "/org/gnome/desktop/background/picture-options"
-        value: "'zoom'"
-
     - name: copy bashrc file
       copy:
         src: files/bash/.bashrc
@@ -283,6 +264,25 @@
       become_user: "{{ user }}"
       ansible.builtin.shell:
         cmd: "cat /tmp/gnome_interface_settings.dconf | dconf load /org/gnome/desktop/interface/"
+
+    - name: copy wallpaper file
+      copy:
+        src: files/wallpaper.jpg
+        dest: /usr/share/backgrounds/ansible-wallpaper.jpg
+        owner: "{{ user }}"
+        group: "{{ user }}"
+
+    - name: set wallpaper
+      become_user: "{{ user }}"
+      dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
+    
+    - name: set wallpaper position
+      become_user: "{{ user }}"
+      dconf:
+        key: "/org/gnome/desktop/background/picture-options"
+        value: "'zoom'"
 
       
 
