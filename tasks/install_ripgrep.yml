@@ -1,0 +1,44 @@
+- name: Check if ripgrep is already installed
+  ansible.builtin.stat:
+    path: "{{ localbin }}/rg"
+  register: rg_stat
+
+- name: Fetch latest ripgrep release from GitHub
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest"
+    return_content: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+  register: rg_release
+  when: not rg_stat.stat.exists
+
+- name: Set ripgrep download URL
+  set_fact:
+    ripgrep_download_url: "{{ rg_release.json.assets | selectattr('name', 'match', 'ripgrep-.*-x86_64-unknown-linux-musl.tar.gz') | map(attribute='browser_download_url') | first }}"
+  when: not rg_stat.stat.exists
+
+- name: Download ripgrep tar.gz
+  ansible.builtin.get_url:
+    url: "{{ ripgrep_download_url }}"
+    dest: "{{ localbin }}/ripgrep.tar.gz"
+  when: not rg_stat.stat.exists
+
+- name: Create installation directory
+  ansible.builtin.file:
+    path: "{{ localbin }}"
+    state: directory
+  when: not rg_stat.stat.exists
+
+- name: Extract ripgrep
+  ansible.builtin.unarchive:
+    src: "{{ localbin }}/ripgrep.tar.gz"
+    dest: "{{ localbin }}"
+    remote_src: yes
+    extra_opts: "--strip-components=1"
+  when: not rg_stat.stat.exists
+
+- name: Remove ripgrep tar.gz
+  ansible.builtin.file:
+    path: "{{ localbin }}/ripgrep.tar.gz"
+    state: absent
+  when: not rg_stat.stat.exists

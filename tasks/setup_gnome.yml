@@ -1,0 +1,42 @@
+- name: Copy GNOME settings files
+  ansible.builtin.copy:
+    src: "files/gnome/{{ item }}"
+    dest: "/tmp/{{ item }}"
+  loop:
+    - gnome_terminal_settings.dconf
+    - media-keys-shortcuts.dconf
+    - gnome_interface_settings.dconf
+
+- name: Load GNOME terminal settings
+  become_user: "{{ user }}"
+  ansible.builtin.shell:
+    cmd: "cat /tmp/gnome_terminal_settings.dconf | dconf load /org/gnome/terminal/"
+
+- name: Load GNOME keyboard shortcuts
+  become_user: "{{ user }}"
+  ansible.builtin.shell:
+    cmd: "cat /tmp/media-keys-shortcuts.dconf | dconf load /org/gnome/settings-daemon/plugins/media-keys/"
+
+- name: Load GNOME interface settings
+  become_user: "{{ user }}"
+  ansible.builtin.shell:
+    cmd: "cat /tmp/gnome_interface_settings.dconf | dconf load /org/gnome/desktop/interface/"
+
+- name: copy wallpaper file
+  copy:
+    src: files/wallpaper.jpg
+    dest: /usr/share/backgrounds/ansible-wallpaper.jpg
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: set wallpaper
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri-dark"
+    value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
+
+- name: set wallpaper position
+  become_user: "{{ user }}"
+  dconf:
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'zoom'"

@@ -113,3 +113,5 @@ if ! shopt -oq posix; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export PATH="$PATH:/usr/local/go/bin"
+export PATH=$PATH:/usr/local/go/bin

@@ -1,0 +1,12 @@
+- name: Setup flatpak
+  ansible.builtin.command:
+    cmd: "flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
+
+- name: Install flatpak packages
+  ansible.builtin.command:
+    cmd: "flatpak install -y flathub {{ item }}"
+  loop:
+    - com.spotify.Client
+    - com.slack.Slack
+    - us.zoom.Zoom
+    - org.chromium.Chromium

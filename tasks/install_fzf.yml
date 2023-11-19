@@ -1,0 +1,12 @@
+- name: Clone fzf repository
+  ansible.builtin.git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: "{{ home }}/.fzf"
+    version: master
+    depth: 1
+  register: clone_result
+
+- name: Run fzf installation script
+  ansible.builtin.shell:
+    cmd: "{{ home }}/.fzf/install --all"
+  when: clone_result is changed

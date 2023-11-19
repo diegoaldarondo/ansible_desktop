@@ -1,0 +1,35 @@
+- name: Create symlink for .bashrc file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/bash/.bashrc"
+    dest: "{{ home }}/.bashrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
+- name: Create symlink for .bash_aliases file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/bash/.bash_aliases"
+    dest: "{{ home }}/.bash_aliases"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
+- name: Create symlink for .gitconfig file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/git/.gitconfig"
+    dest: "{{ home }}/.gitconfig"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
+- name: Create symlink for .ssh config file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/ssh/config"
+    dest: "{{ home }}/.ssh/config"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes

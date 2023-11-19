@@ -1,0 +1,13 @@
+- name: Install radio-active with pipx
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: "pipx install radio-active"
+
+- name: Create symlink for radio config file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/radio/.radio-active-alias"
+    dest: "{{ home }}/.radio-active-alias"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes

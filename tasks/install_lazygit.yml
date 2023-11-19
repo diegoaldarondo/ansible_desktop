@@ -1,0 +1,25 @@
+- name: Get the latest lazygit version
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/jesseduffield/lazygit/releases/latest
+    method: GET
+    return_content: yes
+  register: lazygit_release
+
+- name: Download lazygit tar.gz
+  ansible.builtin.get_url:
+    url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_release.json.tag_name | regex_replace('^v', '') }}_Linux_x86_64.tar.gz"
+    dest: "{{ localbin }}/lazygit.tar.gz"
+    mode: '0755'
+
+- name: Extract lazygit from tar.gz
+  ansible.builtin.unarchive:
+    src: "{{ localbin }}/lazygit.tar.gz"
+    dest: "{{ localbin }}"
+    remote_src: yes
+    
+- name: Remove temporary files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ localbin }}/lazygit.tar.gz"

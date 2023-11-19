@@ -1,0 +1,60 @@
+- name: Install vscode deb
+  become: yes
+  apt:
+    deb: https://go.microsoft.com/fwlink/?LinkID=760868
+    
+- name: Ensure VSCode settings directory exists
+  file:
+    path: /home/diego/.config/Code/User
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Install VSCode extensions
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  loop:
+    - alefragnani.project-manager
+    - GitHub.copilot
+    - GitHub.copilot-chat
+    - ms-python.python
+    - ms-python.vscode-pylance
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-keymap
+    - ms-toolsai.jupyter-renderers
+    - ms-toolsai.vscode-jupyter-cell-tags
+    - ms-toolsai.vscode-jupyter-slideshow
+    - ms-vscode-remote.remote-containers
+    - ms-vscode-remote.remote-ssh
+    - ms-vscode-remote.remote-ssh-edit
+    - ms-vscode-remote.remote-wsl
+    - ms-vscode-remote.vscode-remote-extensionpack
+    - ms-vscode.cmake-tools
+    - ms-vscode.cpptools
+    - ms-vscode.cpptools-extension-pack
+    - ms-vscode.cpptools-themes
+    - ms-vscode.remote-explorer
+    - ms-vscode.remote-server
+    - onnovalkering.vscode-singularity
+    - tomoki1207.pdf
+    - twxs.cmake
+    - zhuangtongfa.material-theme
+  become: no
+
+- name: Create symlink for vscode settings file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/vscode/settings.json"
+    dest: "/home/diego/.config/Code/User/settings.json"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
+- name: Create symlink for vscode keybindings file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/vscode/keybindings.json"
+    dest: "/home/diego/.config/Code/User/keybindings.json"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes

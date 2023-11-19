@@ -1,0 +1,24 @@
+- name: Check if miniconda is already installed
+  ansible.builtin.stat:
+    path: "{{ miniconda_install_dir }}"
+  register: miniconda_stat
+
+- name: Download Miniconda installation script
+  ansible.builtin.get_url:
+    url: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    dest: "{{ miniconda_script }}"
+    mode: '0755'
+  when: not miniconda_stat.stat.exists
+
+- name: Install Miniconda
+  ansible.builtin.command:
+    cmd: "{{ miniconda_script }} -b -p {{ miniconda_install_dir }}"
+  args:
+    creates: "{{ miniconda_install_dir }}"
+  when: not miniconda_stat.stat.exists
+  
+- name: Remove Miniconda installation script
+  ansible.builtin.file:
+    path: "{{ miniconda_script }}"
+    state: absent
+  when: not miniconda_stat.stat.exists

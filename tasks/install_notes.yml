@@ -1,0 +1,12 @@
+- name: Check if notes repository is already installed
+  ansible.builtin.stat:
+    path: "{{ home }}/notes"
+  register: repo_stat
+
+- name: Clone notes repository
+  become_user: "{{ user }}"
+  ansible.builtin.git:
+    repo: "git@github.com:diegoaldarondo/notes.git"
+    dest: "{{ home }}/notes"
+    version: "HEAD"
+  when: not repo_stat.stat.exists
