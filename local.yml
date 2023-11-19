@@ -260,6 +260,21 @@
         owner: diego
         group: diego
 
+    - name: Copy GNOME settings files
+      ansible.builtin.copy:
+        src: "files/gnome/{{ item }}"
+        dest: "/tmp/{{ item }}"
+      loop:
+        - gnome_terminal_settings.dconf
+        # Add other .dconf files as needed
+
+    - name: Load GNOME settings
+      ansible.builtin.command:
+        cmd: "dconf load /org/gnome/terminal/ < /tmp/gnome_terminal_settings.dconf"
+      loop:
+        - gnome_terminal_settings.dconf
+        # Add other .dconf files as needed
+
 
       
 
