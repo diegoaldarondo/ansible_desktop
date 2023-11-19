@@ -68,10 +68,11 @@
         group: diego
 
     - name: Install vscode deb
-      become_user: diego
+      become: yes
       apt:
         deb: https://go.microsoft.com/fwlink/?LinkID=760868
         
+
     - name: copy vscode settings
       copy:
         src: files/vscode/settings.json
