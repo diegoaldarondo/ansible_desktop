@@ -40,6 +40,8 @@
       loop:
         - com.spotify.Client
         - com.slack.Slack
+        - us.zoom.Zoom
+        - org.chromium.Chromium
 
     - name: Make .local/bin
       file:
