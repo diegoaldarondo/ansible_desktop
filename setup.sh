@@ -25,7 +25,6 @@ fi
 echo "Checking for existing SSH keys..."
 if [ -f "$HOME/.ssh/id_ed25519" ] || [ -f "$HOME/.ssh/id_rsa" ]; then
     echo "An existing SSH key was found!"
-    exit 1
 else
     echo "No existing SSH keys found. Generating a new SSH key..."
     # Generate a new SSH key with the provided email
@@ -45,5 +44,5 @@ else
     
     echo "SSH key generation is complete. Please add the public key to GitHub."
     echo
-    cat "$HOME/.ssh/id_ed25519.pub" || cat "$HOME/.ssh/id_rsa.pub"
 fi
+cat "$HOME/.ssh/id_ed25519.pub" || cat "$HOME/.ssh/id_rsa.pub"
