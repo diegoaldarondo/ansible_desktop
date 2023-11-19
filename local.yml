@@ -62,16 +62,14 @@
         src: "{{ home }}/.local/bin/lazygit.tar.gz"
         dest: "{{ home }}/.local/bin"
         remote_src: yes
-        extra_opts: ["-xzvf"]
-
+        
 
     - name: Remove temporary files
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
       loop:
-        - "/tmp/lazygit.tar.gz"
-        - "/tmp/lazygit"
+        - "{{ home }}/.local/bin/lazygit.tar.gz"
 
     - name: copy wallpaper file
       copy:
