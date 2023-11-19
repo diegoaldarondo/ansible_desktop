@@ -33,12 +33,12 @@
 
     - name: Run fzf installation script
       ansible.builtin.shell:
-        cmd: "{{ home }}/.fzf/install --all && source {{ home }}/.bashrc"
+        cmd: "{{ home }}/.fzf/install --all"
       when: clone_result is changed
 
     - name: Check fzf installation
       ansible.builtin.command:
-        cmd: fzf --version
+        cmd: "{{ home }}/.fzf/bin/fzf --version"
       register: fzf_version_check
       failed_when: fzf_version_check.rc != 0
 
