@@ -11,6 +11,16 @@ email="diegoaldarondo@gmail.com" # Replace with your email address
 git config --global user.email "$email"
 git config --global user.name "Diego Aldarondo"
 
+KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
+
+# Check if GitHub is already in known_hosts
+if grep -q "github.com" "$KNOWN_HOSTS_FILE"; then
+    echo "GitHub is already in known_hosts."
+else
+    echo "Adding GitHub to known_hosts..."
+    ssh-keyscan -t rsa github.com >> "$KNOWN_HOSTS_FILE"
+fi
+
 # Check for existing SSH keys
 echo "Checking for existing SSH keys..."
 if [ -f "$HOME/.ssh/id_ed25519" ] || [ -f "$HOME/.ssh/id_rsa" ]; then
@@ -37,15 +47,3 @@ else
     echo
     cat "$HOME/.ssh/id_ed25519.pub" || cat "$HOME/.ssh/id_rsa.pub"
 fi
-
-KNOWN_HOSTS_FILE="$HOME/.ssh/known_hosts"
-
-# Check if GitHub is already in known_hosts
-if grep -q "github.com" "$KNOWN_HOSTS_FILE"; then
-    echo "GitHub is already in known_hosts."
-else
-    echo "Adding GitHub to known_hosts..."
-    ssh-keyscan -t rsa github.com >> "$KNOWN_HOSTS_FILE"
-fi
-
-echo "Done."
