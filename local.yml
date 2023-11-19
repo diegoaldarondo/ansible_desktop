@@ -57,22 +57,15 @@
     - name: Download lazygit tar.gz
       ansible.builtin.get_url:
         url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_release.json.tag_name | regex_replace('^v', '') }}_Linux_x86_64.tar.gz"
-        dest: "/tmp/lazygit.tar.gz"
+        dest: "{{ home }}/.local/bin/lazygit.tar.gz"
         mode: '0755'
 
     - name: Extract lazygit from tar.gz
       ansible.builtin.unarchive:
-        src: "/tmp/lazygit.tar.gz"
-        dest: "/tmp"
+        src: "{{ home }}/.local/bin/lazygit.tar.gz"
+        dest: "{{ home }}/.local/bin/"
         remote_src: yes
         extra_opts: [--strip-components=1]
-
-    - name: Install lazygit binary
-      ansible.builtin.copy:
-        src: "/tmp/lazygit"
-        dest: "{{ lazygit_dest }}"
-        mode: '0755'
-        remote_src: yes
 
     - name: Remove temporary files
       ansible.builtin.file:
