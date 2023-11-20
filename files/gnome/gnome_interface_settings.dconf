@@ -1,6 +1,8 @@
 [/]
 clock-format='12h'
+clock-show-date=true
 color-scheme='prefer-dark'
+enable-animations=true
 font-antialiasing='grayscale'
 font-hinting='slight'
 show-battery-percentage=true
