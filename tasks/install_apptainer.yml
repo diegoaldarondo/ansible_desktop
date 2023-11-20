@@ -1,7 +1,13 @@
+- name: Check if Apptainer is installed
+  ansible.builtin.command:
+    cmd: "apptainer --version"
+  register: apptainer_version
+  failed_when: false
 
 - name: Update apt repositories
   ansible.builtin.apt:
     update_cache: yes
+  when: apptainer_version.rc != 0
 
 - name: Install Apptainer dependencies
   ansible.builtin.apt:
@@ -26,12 +32,14 @@
       - libfuse-dev
       - zlib1g-dev
     state: present
+  when: apptainer_version.rc != 0
 
 - name: Install Go
   ansible.builtin.get_url:
     url: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
     dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
     mode: '0755'
+  when: apptainer_version.rc != 0
 
 - name: Extract Go tarball
   become: yes
@@ -39,6 +47,7 @@
     src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
     dest: "/usr/local"
     remote_src: yes
+  when: apptainer_version.rc != 0
 
 - name: Set Go path in user bashrc
   become_user: diego
@@ -46,12 +55,14 @@
     path: "~/.bashrc"
     line: 'export PATH=$PATH:{{ go_install_dir }}/bin'
     create: yes
+  when: apptainer_version.rc != 0
 
 - name: Clone Apptainer repository
   ansible.builtin.git:
     repo: "{{ apptainer_repo_url }}"
     dest: "{{ apptainer_repo_dir }}"
     version: "main"
+  when: apptainer_version.rc != 0
 
 - name: Compile Apptainer
   ansible.builtin.shell:
@@ -60,18 +71,22 @@
     executable: /bin/bash
   environment:
     PATH: "{{ go_install_dir }}/bin:{{ ansible_env.PATH }}"
+  when: apptainer_version.rc != 0
 
 - name: Install Apptainer
   ansible.builtin.shell:
     cmd: "make install"
     chdir: "{{ apptainer_repo_dir }}/builddir"
     executable: /bin/bash
+  when: apptainer_version.rc != 0
 
 - name: Verify Apptainer installation
   ansible.builtin.command:
     cmd: "apptainer --version"
   register: apptainer_version
+  when: apptainer_version.rc != 0
 
 - name: Display Apptainer version
   ansible.builtin.debug:
     msg: "Apptainer installed successfully: {{ apptainer_version.stdout }}"
+  when: apptainer_version.rc != 0
