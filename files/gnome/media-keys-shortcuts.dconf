@@ -25,7 +25,7 @@ name='RC connection'
 
 [custom-keybindings/custom4]
 binding='<Control><Alt>v'
-command='gnome-terminal -- bash -c "source /home/diego/Documents/code/RCvscode.sh; rcode"'
+command='gnome-terminal -- bash -c "source ~/.bash_aliases; source ~/.fzf.bash; rcode;"'
 name='RC vscode'
 
 [custom-keybindings/custom5]
