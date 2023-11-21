@@ -10,8 +10,13 @@ name='Terminal'
 
 [custom-keybindings/custom1]
 binding='<Control><Alt>o'
-command='sh /home/diego/Documents/code/scripts/two_factor.sh'
+command='sh /home/diego/ansible_desktop/files/scripts/two_factor.sh'
 name='oauth'
+
+[custom-keybindings/custom2]
+binding='<Control><Alt>r'
+command='gnome-terminal -- bash -c "source ~/.bash_aliases; rc"'
+name='rc'
 
 [custom-keybindings/custom3]
 binding='<Control><Alt>r'
