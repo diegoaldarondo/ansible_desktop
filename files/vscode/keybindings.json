@@ -9,5 +9,19 @@
     { "key": "ctrl+shift+z", "command": "-redo" },
     { "key": "ctrl+shift+z", "command": "redo", "when": "!notebookEditorFocused || inputFocus" },
     { "key": "ctrl+y", "command": "-redo" },
-    { "key": "ctrl+y", "command": "redo", "when": "!notebookEditorFocused || inputFocus" },
+    {
+        "key": "ctrl+y",
+        "command": "redo",
+        "when": "!notebookEditorFocused || inputFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "terminal.focus",
+        "when": "panelVisible && terminalFocus != true"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.togglePanel",
+        "when": "(panelVisible && terminalFocus) || !panelVisible"
+    },
 ]
