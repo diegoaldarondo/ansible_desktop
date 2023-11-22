@@ -5,6 +5,7 @@
       - dconf-cli
       - docker
       - exa
+      - fd-find
       - flatpak
       - git
       - htop
