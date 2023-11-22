@@ -1,0 +1,16 @@
+- name: Check if VirtualBox is already installed
+  ansible.builtin.command:
+    cmd: vboxmanage --version
+  register: vbox_version
+  ignore_errors: yes
+
+- name: Download VirtualBox .deb file
+  ansible.builtin.get_url:
+    url: "{{ virtualbox_deb_url }}"
+    dest: "{{ virtualbox_deb_path }}"
+  when: vbox_version is failed
+
+- name: Install VirtualBox
+  ansible.builtin.apt:
+    deb: "{{ virtualbox_deb_path }}"
+  when: vbox_version is failed
