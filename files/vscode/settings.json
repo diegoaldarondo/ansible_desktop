@@ -23,5 +23,6 @@
     "window.menuBarVisibility": "toggle",
     "glassit-linux.opacity": 95,
     "window.zoomLevel": -1,
-    "zenMode.centerLayout": false
+    "zenMode.centerLayout": false,
+    "workbench.editor.showTabs": "single"
 }
