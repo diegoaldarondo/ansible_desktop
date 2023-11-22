@@ -1,0 +1,29 @@
+- name: Check if AnyDesk is installed
+  ansible.builtin.command:
+    cmd: anydesk --version
+  register: anydesk_installed
+  ignore_errors: yes
+
+- name: Add AnyDesk repository key
+  ansible.builtin.apt_key:
+    url: https://keys.anydesk.com/repos/DEB-GPG-KEY
+    state: present
+  when: anydesk_installed is failed
+
+- name: Add AnyDesk repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/anydesk-stable.list
+    line: "deb http://deb.anydesk.com/ all main"
+    create: yes
+  when: anydesk_installed is failed
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: anydesk_installed is failed
+
+- name: Install AnyDesk
+  ansible.builtin.apt:
+    name: anydesk
+    state: present
+  when: anydesk_installed is failed

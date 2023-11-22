@@ -40,6 +40,7 @@
     - include_tasks: tasks/radio.yml
     - include_tasks: tasks/gnome.yml
     - include_tasks: tasks/apptainer.yml
+    - include_tasks: tasks/virtualbox.yml
     - include_tasks: tasks/dotfiles.yml
 
 
