@@ -42,3 +42,21 @@
     group: "{{ user }}"
     state: link
     force: yes
+
+- name: Create symlink for vscode settings file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/vscode/settings.json"
+    dest: "/home/diego/.config/Code/User/settings.json"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
+- name: Create symlink for vscode keybindings file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/vscode/keybindings.json"
+    dest: "/home/diego/.config/Code/User/keybindings.json"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
