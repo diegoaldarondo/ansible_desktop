@@ -8,11 +8,21 @@ fi
 alias cat="bat"
 alias ls="exa"
 alias la="exa -la"
+alias fd="fdfind"
 
 # User specific functions
-function sync {
-	note sync
-	git -C ~/dotfiles pull
+function o {
+	file=$( (fd -H -t f . ~ ; fd -H -t l . ~) | uniq | fzf --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+	if [ -n "$file" ]; then
+		echo $file
+		code $file
+	fi
+}
+function c {
+	folder=$(fd -H -t d . ~ | fzf --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
+	if [ -n "$folder" ]; then
+		cd $folder
+	fi
 }
 function rc {
 	rm ~/.ssh/daldarondo@login.rc.fas.harvard.edu\:22
