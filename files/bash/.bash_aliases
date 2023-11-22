@@ -6,6 +6,8 @@ if [ ! -L $HOME/.local/bin/bat ]; then
 	ln -s /usr/bin/batcat $HOME/.local/bin/bat
 fi
 alias cat="bat"
+alias ls="exa"
+alias la="exa -la"
 
 # User specific functions
 function sync {
