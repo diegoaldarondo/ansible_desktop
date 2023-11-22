@@ -42,17 +42,17 @@
         owner: "{{ user }}"
         group: "{{ user }}"
   
-    - include_tasks: tasks/install_flatpacks.yml
-    - include_tasks: tasks/install_fzf.yml
-    - include_tasks: tasks/install_lazygit.yml
-    - include_tasks: tasks/install_ripgrep.yml
-    - include_tasks: tasks/install_notes.yml
-    - include_tasks: tasks/install_miniconda.yml
-    - include_tasks: tasks/install_vscode.yml
-    - include_tasks: tasks/install_radio.yml
-    - include_tasks: tasks/setup_gnome.yml
-    - include_tasks: tasks/install_apptainer.yml
-    - include_tasks: tasks/link_dotfiles.yml
+    - include_tasks: tasks/flatpaks.yml
+    - include_tasks: tasks/fzf.yml
+    - include_tasks: tasks/lazygit.yml
+    - include_tasks: tasks/ripgrep.yml
+    - include_tasks: tasks/notes.yml
+    - include_tasks: tasks/miniconda.yml
+    - include_tasks: tasks/vscode.yml
+    - include_tasks: tasks/radio.yml
+    - include_tasks: tasks/gnome.yml
+    - include_tasks: tasks/apptainer.yml
+    - include_tasks: tasks/dotfiles.yml
 
 
       
