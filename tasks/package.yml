@@ -12,3 +12,4 @@
       - flatpak
       - pipx
       - docker
+      - neofetch
