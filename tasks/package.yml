@@ -1,0 +1,14 @@
+- name: install packages
+  package:
+    name: 
+      - htop
+      - tmux
+      - bat
+      - dconf-cli
+      - python3-psutil
+      - inkscape
+      - git
+      - tealdeer
+      - flatpak
+      - pipx
+      - docker
