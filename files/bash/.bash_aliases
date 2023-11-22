@@ -5,6 +5,7 @@ alias lg="lazygit"
 if [ ! -L $HOME/.local/bin/bat ]; then
 	ln -s /usr/bin/batcat $HOME/.local/bin/bat
 fi
+alias cat="bat"
 
 # User specific functions
 function sync {
