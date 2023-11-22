@@ -13,3 +13,4 @@
       - pipx
       - docker
       - neofetch
+      - exa
