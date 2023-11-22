@@ -9,8 +9,11 @@
       - git
       - htop
       - inkscape
+      - ncdu
       - neofetch
       - pipx
       - python3-psutil
       - tealdeer
       - tmux
+      - vlc
+      - xdotool
