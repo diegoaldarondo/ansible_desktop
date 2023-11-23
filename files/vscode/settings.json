@@ -24,5 +24,6 @@
     "glassit-linux.opacity": 95,
     "window.zoomLevel": -1,
     "zenMode.centerLayout": false,
-    "workbench.editor.showTabs": "single"
+    "workbench.editor.showTabs": "single",
+    "workbench.startupEditor": "none"
 }
