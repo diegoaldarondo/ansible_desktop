@@ -12,14 +12,15 @@ alias fd="fdfind"
 
 # User specific functions
 function o {
-	file=$( (fd -H -t f . ~ ; fd -H -t l . ~) | uniq | fzf --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+	# file=$( (fd -H -t f . ~ ; fd -H -t l . ~) | uniq | fzf --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+	file=$( (fd -H --color=always -t f --follow . ~) | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
 	if [ -n "$file" ]; then
 		echo "$file"
 		code "$file"
 	fi
 }
 function c {
-	folder=$(fd -H -t d . ~ | fzf --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
+	folder=$(fd -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
 	if [ -n "$folder" ]; then
 		cd "$folder"
 	fi
