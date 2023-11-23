@@ -9,6 +9,7 @@ alias cat="bat"
 alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
+alias lc="~/ansible_desktop/files/scipts/lazycommit.sh"
 
 # User specific functions
 function o {
