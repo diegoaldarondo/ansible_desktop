@@ -25,5 +25,6 @@
     "window.zoomLevel": -1,
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "zenMode.showTabs": "single"
 }
