@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Lazydiff - a wrapper for git diff that allows you to view commit diffs 
-# for use with Large Language Models to write commit messages and daily notes. 
+# Lazycommit - a wrapper for git diff that allows you to view commit diffs 
+# so that Large Language Models can help write commit messages and daily notes. 
 # Commit diffs are piped to vscode using the `code -` command.
 
 show_help() {
@@ -16,6 +16,10 @@ Usage: ${0##*/} [options]
 EOF
 }
 
+prompt() {
+    cat - <(echo ----------------) <(echo "Please write a professional, well formatted commit message for this git diff.")
+}
+
 show_diff_for_period() {
     local period="$1"
     git diff "HEAD@{1 $period ago}" HEAD | code -
@@ -28,9 +32,9 @@ select_commits_with_fzf() {
         exit
     fi
     if [[ $(echo "$commits" | wc -l) -eq 1 ]]; then
-        git diff "$commits"~1 "$commits" | code -
+        git diff "$commits"~1 "$commits" | prompt | code -
     else
-        git diff $commits | code -
+        git diff $commits | prompt | code -
     fi
 }
 
@@ -67,4 +71,4 @@ while :; do
 done
 
 # Default action if no option is provided
-git diff | code -
+git diff | prompt | code -
