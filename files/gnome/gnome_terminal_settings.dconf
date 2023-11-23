@@ -2,7 +2,7 @@
 theme-variant='dark'
 
 [legacy/profiles:]
-default='8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0'
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
 list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '8f16f8a8-2aac-404f-a6fe-5bfe30e2abce', '8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0']
 
 [legacy/profiles:/:8e0e2812-5dd0-4155-9ee6-9ec1ed9628c0]
@@ -24,6 +24,6 @@ audible-bell=false
 background-color='rgb(35,39,46)'
 bold-is-bright=false
 foreground-color='rgb(161,168,181)'
-palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+palette=['rgb(64,68,80)', 'rgb(202,89,98)', 'rgb(155,192,110)', 'rgb(196,143,89)', 'rgb(106,166,236)', 'rgb(176,105,217)', 'rgb(108,178,193)', 'rgb(216,218,224)', 'rgb(81,86,101)', 'rgb(230,102,111)', 'rgb(181,222,127)', 'rgb(225,164,101)', 'rgb(121,196,251)', 'rgb(203,123,249)', 'rgb(126,208,223)', 'rgb(230,230,230)']
 use-theme-colors=false
 visible-name='atom-one-dark-pro'
