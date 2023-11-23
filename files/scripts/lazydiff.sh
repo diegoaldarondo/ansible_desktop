@@ -22,8 +22,16 @@ show_diff_for_period() {
 }
 
 select_commits_with_fzf() {
-    local commits=$(git log --pretty=format:"%h - %s" | fzf --multi --no-sort --reverse --tiebreak=index --no-multi --preview "git show --color=always {1}" --preview-window=up:60%:wrap --ansi --phony --query="$q" +m --tac | awk '{print $1}')
-    git diff $commits | code -
+    local commits=$(git log --pretty=format:"%h - %s" | fzf -m --no-sort --reverse --ansi --tiebreak=index --preview "git show --color=always {1}" --preview-window=50% | awk '{print $1}')
+    echo "$commits"
+    if [[ -z "$commits" ]]; then
+        exit
+    fi
+    if [[ $(echo "$commits" | wc -l) -eq 1 ]]; then
+        git diff "$commits"~1 "$commits" | code -
+    else
+        git diff $commits | code -
+    fi
 }
 
 while :; do
