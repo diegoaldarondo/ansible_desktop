@@ -1,0 +1,8 @@
+- name: Create symlink for .bashrc file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/scripts/lazycommit.sh"
+    dest: "{{ home }}/.local/bin/lazycommit"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
