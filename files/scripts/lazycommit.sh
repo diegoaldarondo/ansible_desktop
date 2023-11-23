@@ -45,7 +45,7 @@ while :; do
             exit
             ;;
         -c|--cached)
-            git diff --cached | code -
+            git diff --cached | prompt | code -
             exit
             ;;
         --day)
