@@ -10,6 +10,9 @@ alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
 alias lc="lazycommit"
+if [ -f $HOME/.secrets ]; then
+	source $HOME/.secrets
+fi
 
 # User specific functions
 function o {
