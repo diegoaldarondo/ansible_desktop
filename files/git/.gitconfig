@@ -11,3 +11,5 @@
   ff = only
 [fetch]
   prune = true
+[core]
+  editor = code --wait
