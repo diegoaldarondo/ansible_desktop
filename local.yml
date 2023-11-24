@@ -20,6 +20,7 @@
     - apptainer_repo_dir: "~/apptainer"
     - virtualbox_deb_url: "https://download.virtualbox.org/virtualbox/7.0.12/virtualbox-7.0_7.0.12-159484~Debian~bookworm_amd64.deb"
     - virtualbox_deb_path: "/tmp/virtualbox.deb"
+    - vault_file: vault/secrets.yml
 
   tasks:
     - name: Make .local/bin
@@ -29,6 +30,7 @@
         owner: "{{ user }}"
         group: "{{ user }}"
   
+    - include_tasks: tasks/secrets.yml
     - include_tasks: tasks/package.yml
     - include_tasks: tasks/flatpaks.yml
     - include_tasks: tasks/fzf.yml
@@ -43,6 +45,7 @@
     - include_tasks: tasks/anydesk.yml
     - include_tasks: tasks/virtualbox.yml
     - include_tasks: tasks/scripts.yml
+    - include_tasks: tasks/uninstall.yml
     - include_tasks: tasks/dotfiles.yml
 
 
