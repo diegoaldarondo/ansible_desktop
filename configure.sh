@@ -1,4 +1,4 @@
 #!/bin/bash
 
 git pull origin main
-ansible-playbook local.yml --ask-become-pass
+ansible-playbook local.yml --ask-become-pass --ask-vault-pass
