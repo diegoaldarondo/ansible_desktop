@@ -69,3 +69,12 @@
     group: "{{ user }}"
     state: link
     force: yes
+
+- name: Create symlink for lazygit .config
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/lazygit"
+    dest: "{{ home }}/.config/lazygit"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
