@@ -40,6 +40,7 @@
     - include_tasks: tasks/miniconda.yml
     - include_tasks: tasks/vscode.yml
     - include_tasks: tasks/radio.yml
+    - include_tasks: tasks/shell_gpt.yml
     - include_tasks: tasks/gnome.yml
     - include_tasks: tasks/apptainer.yml
     - include_tasks: tasks/anydesk.yml

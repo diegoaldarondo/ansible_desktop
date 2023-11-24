@@ -1,0 +1,4 @@
+- name: Install shell_gpt with pipx
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: "pipx install shell-gpt"
