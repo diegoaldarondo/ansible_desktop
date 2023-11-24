@@ -60,3 +60,12 @@
     group: "{{ user }}"
     state: link
     force: yes
+
+- name: Create symlink for shell_gpt files
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/shell_gpt/"
+    dest: "{{ home }}/.config/shell_gpt"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
