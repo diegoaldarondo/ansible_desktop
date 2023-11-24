@@ -1,0 +1,25 @@
+
+- name: Uninstall games
+  package:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - aisleriot
+    - five-or-more
+    - four-in-a-row
+    - gbrainy
+    - gnome-chess
+    - hitori
+    - gnome-klotski
+    - gnome-mahjongg
+    - gnome-mines
+    - gnome-nibbles
+    - gnome-robots
+    - gnome-sudoku
+    - gnome-taquin
+    - gnome-tetravex
+    - iagno
+    - lightsoff
+    - quadrapassel
+    - swell-foop
+    - tali
