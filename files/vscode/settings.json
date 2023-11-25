@@ -26,5 +26,7 @@
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
     "workbench.startupEditor": "none",
-    "zenMode.showTabs": "single"
+    "zenMode.showTabs": "single",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
 }
