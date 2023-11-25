@@ -2,4 +2,8 @@ customCommands:
   - key: '<f8>'
     command: "git diff --cached | sgpt --role=commit --model=gpt-4 | git commit --file=-"
     context:  "global"
-    description: "commit staged changes using sgpt"
+    description: "Commit staged changes using sgpt"
+  - key: '<f9>'
+    command: "git diff --cached | sgpt --role=commit_critic --model=gpt-4 | code --wait"
+    context:  "global"
+    description: "Critique staged changes using sgpt"
