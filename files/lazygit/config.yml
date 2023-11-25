@@ -12,4 +12,3 @@ customCommands:
     command: "bash -c 'source ~/.bash_aliases; lint {{.SelectedFile.Name}}'"
     context:  "global"
     description: "Lint the current file."
-  
