@@ -16,6 +16,38 @@ if [ -f $HOME/.secrets ]; then
 fi
 
 # User specific functions
+function lint {
+# Lint a given python file.
+#
+# Parameters:
+# - file: The file or directory to be linted.
+#
+# Returns:
+# - None
+#
+# Raises:
+# - FileNotFoundError: If the specified file or directory does not exist.
+# - ValueError: If the specified file or directory is not valid for linting.
+#
+# Usage:
+# - lint <file>
+    
+	# Check that the file exists and that it is a python file
+	if [ -f "$1" ]; then
+		# Check if the file extension is .py
+		if [[ "$1" == *.py ]]; then
+			echo "The file exists and is a python file."
+		else
+			echo "The file exists but is not a python file."
+			exit 1
+		fi
+	else
+		echo "The file does not exist."
+		exit 1
+	fi
+	cat $1 <(pylint $1) | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d $1 -
+}
+
 function o {
 	# file=$( (fd -H -t f . ~ ; fd -H -t l . ~) | uniq | fzf --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
 	file=$( (fd -H --color=always -t f --follow . ~) | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
