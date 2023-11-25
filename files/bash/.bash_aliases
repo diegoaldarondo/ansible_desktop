@@ -33,7 +33,7 @@ improve_code() {
 }
 
 format_daily_diff() {
-	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7
+	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | sgpt --role=format_note --model=gpt-4
 }
 
 o() {
