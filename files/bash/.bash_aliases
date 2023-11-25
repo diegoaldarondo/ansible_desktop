@@ -31,20 +31,8 @@ function c {
 	fi
 }
 
-function format {
-	cat - | sgpt --role=format_note --model=gpt-4 
-}
-function format_file {
-	# Check that the file exists
-	if [ ! -f $1 ]; then
-		echo "File $1 does not exist"
-		return
-	fi
-	cat $1 | format
-}
-
 function format_daily_diff {
-	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | format
+	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 
 }
 
 function rc {
