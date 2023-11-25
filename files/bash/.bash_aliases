@@ -32,6 +32,10 @@ improve_code() {
 	fi
 }
 
+format_daily_diff() {
+	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7
+}
+
 o() {
 	local file=$(fd -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
 	[ -n "$file" ] && code "$file"
@@ -40,10 +44,6 @@ o() {
 c() {
 	local folder=$(fd -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
 	[ -n "$folder" ] && cd "$folder"
-}
-
-format_daily_diff() {
-	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 
 }
 
 rc() {
