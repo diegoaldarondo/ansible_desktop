@@ -40,9 +40,7 @@ function lint {
 	# Check that the file exists and that it is a python file
 	if [ -f "$1" ]; then
 		# Check if the file extension is .py
-		if [[ "$1" == *.py ]]; then
-			echo "The file exists and is a python file."
-		else
+		if [[ ! "$1" == *.py ]]; then
 			echo "The file exists but is not a python file."
 			exit 1
 		fi
