@@ -30,11 +30,9 @@ function c {
 		cd "$folder"
 	fi
 }
-
 function format_daily_diff {
 	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 
 }
-
 function rc {
 	rm ~/.ssh/daldarondo@login.rc.fas.harvard.edu\:22
 	ssh -fN login.rc.fas.harvard.edu
