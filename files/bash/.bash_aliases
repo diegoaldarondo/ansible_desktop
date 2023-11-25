@@ -10,6 +10,11 @@ alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
 alias lc="lazycommit"
+# Alias for running sgpt with gpt-4 model and temperature .7
+alias sg="sgpt --model=gpt-4 --temperature=.7"
+
+# Alias for running interactive sgpt with gpt-4 model, temperature .7 
+alias sgc="sgpt --model=gpt-4 --temperature=.7 --repl ' '"
 
 if [ -f $HOME/.secrets ]; then
 	source $HOME/.secrets
