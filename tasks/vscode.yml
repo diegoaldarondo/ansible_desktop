@@ -17,6 +17,7 @@
     - alefragnani.project-manager
     - GitHub.copilot
     - GitHub.copilot-chat
+    - james-yu.latex-workshop
     - ms-python.python
     - ms-python.vscode-pylance
     - ms-toolsai.jupyter
@@ -36,6 +37,7 @@
     - ms-vscode.remote-explorer
     - ms-vscode.remote-server
     - onnovalkering.vscode-singularity
+    - redhat.ansible
     - tomoki1207.pdf
     - twxs.cmake
     - zhuangtongfa.material-theme
