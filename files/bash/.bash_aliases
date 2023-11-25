@@ -23,6 +23,15 @@ lint() {
 	fi
 }
 
+improve_code() {
+	if [ -f "$1" ]; then
+		cat "$1" | sgpt --role=improve_code --model=gpt-4 --temperature=.7 | code -d "$1" -
+	else
+		echo "The file does not exist."
+		exit 1
+	fi
+}
+
 o() {
 	local file=$(fd -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
 	[ -n "$file" ] && code "$file"
