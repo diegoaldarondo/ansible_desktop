@@ -10,6 +10,7 @@ alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
 alias lc="lazycommit"
+
 if [ -f $HOME/.secrets ]; then
 	source $HOME/.secrets
 fi
@@ -29,6 +30,23 @@ function c {
 		cd "$folder"
 	fi
 }
+
+function format {
+	cat - | sgpt --role=format_note --model=gpt-4 
+}
+function format_file {
+	# Check that the file exists
+	if [ ! -f $1 ]; then
+		echo "File $1 does not exist"
+		return
+	fi
+	cat $1 | format
+}
+
+function format_daily_diff {
+	git diff $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | format
+}
+
 function rc {
 	rm ~/.ssh/daldarondo@login.rc.fas.harvard.edu\:22
 	ssh -fN login.rc.fas.harvard.edu
