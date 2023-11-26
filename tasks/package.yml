@@ -18,3 +18,5 @@
       - tmux
       - vlc
       - xdotool
+      - texlive
+      - texlive-full
