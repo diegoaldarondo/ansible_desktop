@@ -12,7 +12,7 @@ alias gpti="sgpt --model=gpt-4 --temperature=.7 --repl ' '"
 # Miscellaneous
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
 [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
-[ -f "$HOME/notes/tasks/task_aliases.sh"] && source "$HOME/notes/tasks/task_aliases.sh"
+[ -f "$HOME/notes/tasks/task_aliases.sh" ] && source "$HOME/notes/tasks/task_aliases.sh"
 
 # User specific functions
 lint() {
@@ -34,7 +34,11 @@ improve_code() {
 }
 
 format_daily_log() {
-	git log $(git rev-list -n 1 --before="5 AM" HEAD) HEAD | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | sgpt --role=format_note --model=gpt-4 | code -
+	if [ -z "$1" ]; then
+		git log --since-as-filter="yesterday 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+	else
+		git log --since-as-filter="$1 days ago 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+	fi
 }
 
 o() {
