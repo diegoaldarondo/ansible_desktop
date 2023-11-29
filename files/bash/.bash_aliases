@@ -8,9 +8,10 @@ alias fd="fdfind"
 alias lc="lazycommit"
 alias gpt="sgpt --model=gpt-4 --temperature=.7"
 alias gpti="sgpt --model=gpt-4 --temperature=.7 --repl ' '"
-alias task="python $HOME/notes/tasks/task.py"
-alias tasks="python $HOME/notes/tasks/task.py"
+alias task="python $HOME/notes/tasks/tasks.py"
+alias tasks="python $HOME/notes/tasks/tasks.py"
 alias random_task='grep "\[ \]" ~/notes/tasks/tasks.md | shuf -n 1 '
+
 
 # Miscellaneous
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
