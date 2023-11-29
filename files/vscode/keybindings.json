@@ -24,4 +24,8 @@
         "command": "workbench.action.togglePanel",
         "when": "(panelVisible && terminalFocus) || !panelVisible"
     },
+    {
+        "key": "ctrl+'",
+        "command": "workbench.action.toggleMaximizedPanel"
+    },
 ]
