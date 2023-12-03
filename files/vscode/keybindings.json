@@ -95,5 +95,5 @@
     {
         "key": "ctrl+alt+b",
         "command": "-workbench.action.toggleAuxiliaryBar"
-    },
+    }
 ]
