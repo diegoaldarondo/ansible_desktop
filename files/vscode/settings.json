@@ -95,4 +95,5 @@
         }
     ],
     "latex-workshop.latex.autoBuild.run": "never",
+    "ansible.validation.lint.enabled": false,
 }
