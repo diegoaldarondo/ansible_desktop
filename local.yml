@@ -33,6 +33,7 @@
     - include_tasks: tasks/secrets.yml
     - include_tasks: tasks/package.yml
     - include_tasks: tasks/flatpaks.yml
+    - include_tasks: tasks/firefox_extensions.yml
     - include_tasks: tasks/fzf.yml
     - include_tasks: tasks/lazygit.yml
     - include_tasks: tasks/ripgrep.yml
