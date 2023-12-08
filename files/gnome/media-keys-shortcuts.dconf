@@ -1,5 +1,5 @@
 [/]
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']
 rotate-video-lock-static=@as []
 terminal=['<Super>t']
 
@@ -14,9 +14,9 @@ command='sh /home/diego/ansible_desktop/files/scripts/two_factor.sh'
 name='oauth'
 
 [custom-keybindings/custom2]
-binding='<Control><Alt>r'
-command='gnome-terminal -- bash -c "source ~/.bash_aliases; rc"'
-name='rc'
+binding='<Control><Alt>c'
+command='gnome-terminal -- bash -c "source ~/.bash_aliases; source ~/.fzf.bash; c; code .;"'
+name='vscode'
 
 [custom-keybindings/custom3]
 binding='<Control><Alt>r'

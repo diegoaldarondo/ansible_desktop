@@ -1,4 +1,5 @@
 [legacy]
+always-check-default-terminal=true
 theme-variant='dark'
 
 [legacy/profiles:]
