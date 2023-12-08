@@ -11,6 +11,13 @@ alias gpti="sgpt --model=gpt-4 --temperature=.7 --repl ' '"
 alias task="python $HOME/notes/tasks/tasks.py"
 alias tasks="python $HOME/notes/tasks/tasks.py"
 alias random_task='grep "\[ \]" ~/notes/tasks/tasks.md | shuf -n 1 '
+alias n="note"
+alias ns="note sync"
+alias nf="note find"
+alias nfc="note find_contents"
+alias ni="note improve"
+alias nt="note tomorrow"
+alias ny="note yesterday"
 
 
 # Miscellaneous
