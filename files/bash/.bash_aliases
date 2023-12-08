@@ -28,6 +28,8 @@ alias ny="note yesterday"
 lint() {
 	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
 		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d "$1" -
+	elif [ -f "$1" ] && [[ "$(head -n 1 "$1")" == "#!/bin/bash" ]]; then
+		cat "$1" <(shellcheck "$1") | sgpt --role=shellcheck --model=gpt-4 --temperature=.7 | code -d "$1" -
 	else
 		echo "The file does not exist or is not a python file."
 		exit 1
