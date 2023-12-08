@@ -17,7 +17,7 @@
     - go_version: "1.19.6"
     - go_install_dir: "/usr/local/go"
     - apptainer_repo_url: "https://github.com/apptainer/apptainer.git"
-    - apptainer_repo_dir: "~/apptainer"
+    - apptainer_repo_dir: "{{ home }}/apptainer"
     - virtualbox_deb_url: "https://download.virtualbox.org/virtualbox/7.0.12/virtualbox-7.0_7.0.12-159484~Debian~bookworm_amd64.deb"
     - virtualbox_deb_path: "/tmp/virtualbox.deb"
     - vault_file: vault/secrets.yml
