@@ -18,6 +18,11 @@ alias nfc="note find_contents"
 alias ni="note improve"
 alias nt="note tomorrow"
 alias ny="note yesterday"
+alias mems="python $HOME/notes/memory/memory.py store"
+alias memr="python $HOME/notes/memory/memory.py recall"
+alias memu="python $HOME/notes/memory/memory.py update"
+alias memf="python $HOME/notes/memory/memory.py forget"
+alias meme="python $HOME/notes/memory/memory.py edit"
 
 
 # Miscellaneous
@@ -25,6 +30,16 @@ alias ny="note yesterday"
 [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
 
 # User specific functions
+
+ff () {
+	link=$(python $HOME/notes/memory/memory.py recall)
+	if [ -z "$link" ]; then
+		echo "No link found."
+	else
+		firefox "$link"
+	fi
+}
+
 lint() {
 	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
 		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d "$1" -
