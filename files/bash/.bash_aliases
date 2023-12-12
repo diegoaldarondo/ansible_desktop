@@ -36,7 +36,7 @@ ff () {
 	if [ -z "$link" ]; then
 		echo "No link found."
 	else
-		firefox "$link"
+		firefox "$link" &
 	fi
 }
 
