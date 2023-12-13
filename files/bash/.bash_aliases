@@ -23,7 +23,7 @@ alias memr="python $HOME/notes/memory/memory.py recall"
 alias memu="python $HOME/notes/memory/memory.py update"
 alias memf="python $HOME/notes/memory/memory.py forget"
 alias meme="python $HOME/notes/memory/memory.py edit"
-
+alias daily="python $HOME/notes/tasks/daily.py"
 
 # Miscellaneous
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
