@@ -45,6 +45,19 @@ ff () {
 	fi
 }
 
+polish() {
+	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
+		black "$1"
+		isort "$1"
+		autoflake --remove-all-unused-imports --in-place "$1"
+		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | sgpt --role=typehint --temperature=.7 --model=gpt-3.5-turbo | sgpt --role=docstring --temperature=.7 --model=gpt-3.5-turbo | code -d "$1" -
+		
+	else
+		echo "The file does not exist or is not a python file."
+		exit 1
+	fi
+}
+
 lint() {
 	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
 		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d "$1" -
