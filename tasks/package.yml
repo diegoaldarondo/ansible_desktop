@@ -1,7 +1,9 @@
 - name: install packages
   package:
     name: 
+      - autoflake
       - bat
+      - black
       - dconf-cli
       - docker
       - exa
@@ -10,13 +12,15 @@
       - git
       - htop
       - inkscape
+      - isort
       - ncdu
       - neofetch
       - pipx
+      - pylint
       - python3-psutil
       - tealdeer
+      - texlive
+      - texlive-full
       - tmux
       - vlc
       - xdotool
-      - texlive
-      - texlive-full
