@@ -96,4 +96,5 @@
     ],
     "latex-workshop.latex.autoBuild.run": "never",
     "ansible.validation.lint.enabled": false,
+    "markdown-preview-github-styles.darkTheme": "dark_dimmed",
 }

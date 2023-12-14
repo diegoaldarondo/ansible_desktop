@@ -15,6 +15,7 @@
     cmd: "code --install-extension {{ item }}"
   loop:
     - alefragnani.project-manager
+    - bierner.markdown-preview-github-styles
     - GitHub.copilot
     - GitHub.copilot-chat
     - james-yu.latex-workshop
