@@ -31,6 +31,11 @@ alias daily="python $HOME/notes/tasks/daily.py"
 
 # User specific functions
 
+sync () {
+	git -C ~/notes pull
+	git -C ~/ansible_desktop pull
+}
+
 ff () {
 	link=$(python $HOME/notes/memory/memory.py recall)
 	if [ -z "$link" ]; then
