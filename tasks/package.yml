@@ -1,9 +1,11 @@
 - name: install packages
   package:
     name: 
+      - abook
       - autoflake
       - bat
       - black
+      - curl
       - dconf-cli
       - docker
       - exa
@@ -13,14 +15,23 @@
       - htop
       - inkscape
       - isort
+      - isync
+      - lynx
+      - msmtp
       - ncdu
       - neofetch
+      - neomutt
+      - notmuch
+      - pass 
       - pipx
+      - procmail
       - pylint
       - python3-psutil
       - tealdeer
       - texlive
       - texlive-full
       - tmux
+      - urlscan
+      - urlview
       - vlc
       - xdotool
