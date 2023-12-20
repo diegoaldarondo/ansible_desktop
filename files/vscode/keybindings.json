@@ -58,36 +58,7 @@
             ]
         }
     },
-    {
-        "command": "runCommands",
-        "key": "ctrl+alt+shift+t",
-        "args": {
-            "commands": [
-                "workbench.action.terminal.focus",
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "task\r\n"
-                    }
-                }
-            ]
-        }
-    },
-    {
-        "command": "runCommands",
-        "key": "ctrl+alt+shift+n",
-        "args": {
-            "commands": [
-                "workbench.action.terminal.focus",
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "note\r\n"
-                    }
-                }
-            ]
-        }
-    },
+
     {
         "key": "ctrl+shift+alt+b",
         "command": "workbench.action.toggleAuxiliaryBar"
@@ -95,5 +66,69 @@
     {
         "key": "ctrl+alt+b",
         "command": "-workbench.action.toggleAuxiliaryBar"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "cursorMove",
+        "args": {
+            "to": "up",
+            "by": "line",
+            "value": 3,
+            "select": false
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "cursorMove",
+        "args": {
+            "to": "down",
+            "by": "line",
+            "value": 3,
+            "select": false
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "cursorMove",
+        "args": {
+            "to": "up",
+            "by": "line",
+            "value": 3,
+            "select": true
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "cursorMove",
+        "args": {
+            "to": "down",
+            "by": "line",
+            "value": 3,
+            "select": true
+        },
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "runCommands",
+        "key": "alt+End",
+        "args": {
+            "commands": [
+                "editor.action.insertCursorAtEndOfEachLineSelected",
+                "cursorEnd"
+            ]
+        }
+    },
+    {
+        "command": "runCommands",
+        "key": "alt+Home",
+        "args": {
+            "commands": [
+                "editor.action.insertCursorAtEndOfEachLineSelected",
+                "cursorHome"
+            ]
+        }
     }
 ]
