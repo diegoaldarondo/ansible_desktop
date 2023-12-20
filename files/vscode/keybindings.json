@@ -130,5 +130,15 @@
                 "cursorHome"
             ]
         }
+    },
+    {
+        "command": "editor.action.smartSelect.grow",
+        "key": "shift+alt+right",
+        "when": "editorTextFocus"
+    },
+    {
+        "command": "editor.action.smartSelect.shrink",
+        "key": "shift+alt+left",
+        "when": "editorTextFocus"
     }
 ]
