@@ -34,7 +34,6 @@
                 "workbench.action.togglePanel"
             ]
         },
-        // "command": "workbench.action.togglePanel",
         "when": "(panelVisible && terminalFocus)"
     },
     {
