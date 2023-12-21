@@ -1,4 +1,5 @@
 {
+	"telemetry.telemetryLevel": "off",
     "workbench.colorTheme": "One Dark Pro Darker",
     "editor.inlineSuggest.enabled": true,
     "remote.SSH.connectTimeout": 60,
@@ -16,19 +17,13 @@
         "scminput": false
     },
     "oneDarkPro.editorTheme": "One Dark Pro Darker",
-    "markdown-preview-enhanced.mermaidTheme": "dark",
-    "markdown-preview-enhanced.previewTheme": "one-dark.css",
-    "markdown-preview-enhanced.codeBlockTheme": "one-dark.css",
-    "markdown-preview-enhanced.revealjsTheme": "night.css",
     "window.menuBarVisibility": "toggle",
-    "glassit-linux.opacity": 95,
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
     "workbench.startupEditor": "none",
     "zenMode.showTabs": "single",
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "window.zoomLevel": -1,
     "editor.minimap.renderCharacters": false,
     "editor.scrollbar.vertical": "hidden",
     "editor.scrollbar.verticalScrollbarSize": 0,
@@ -98,4 +93,6 @@
     "ansible.validation.lint.enabled": false,
     "markdown-preview-github-styles.darkTheme": "dark_dimmed",
     "terminal.integrated.defaultProfile.linux": "tmux",
+    "window.zoomLevel": -1,
+    "editor.minimap.enabled": false,
 }
