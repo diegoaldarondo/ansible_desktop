@@ -16,13 +16,26 @@
     },
     {
         "key": "ctrl+j",
-        "command": "terminal.focus",
-        "when": "panelVisible && terminalFocus != true"
+        "command": "runCommands",
+        "args" : {
+            "commands": [
+                "workbench.action.toggleMaximizedPanel",
+                "workbench.action.togglePanel"
+            ]
+        },
+        "when": "(panelVisible && terminalFocus != true) || !panelVisible"
     },
     {
         "key": "ctrl+j",
-        "command": "workbench.action.togglePanel",
-        "when": "(panelVisible && terminalFocus) || !panelVisible"
+        "command": "runCommands",
+        "args" : {
+            "commands": [
+                "workbench.action.toggleMaximizedPanel",
+                "workbench.action.togglePanel"
+            ]
+        },
+        // "command": "workbench.action.togglePanel",
+        "when": "(panelVisible && terminalFocus)"
     },
     {
         "key": "ctrl+'",
