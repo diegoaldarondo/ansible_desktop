@@ -140,5 +140,17 @@
         "command": "editor.action.smartSelect.shrink",
         "key": "shift+alt+left",
         "when": "editorTextFocus"
-    }
+    },
+    {
+        "key": "ctrl+alt+a",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "workbench.action.terminal.selectAll",
+                "editor.action.clipboardCopyAction",
+                "workbench.action.files.newUntitledFile",
+                "editor.action.clipboardPasteAction"
+            ]
+        }
+      }
 ]
