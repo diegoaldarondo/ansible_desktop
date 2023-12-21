@@ -16,6 +16,15 @@
     state: link
     force: yes
 
+- name: Create symlink for .tmux.conf file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/tmux/.tmux.conf"
+    dest: "{{ home }}/.tmux.conf"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
+
 - name: Create symlink for .gitconfig file
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/git/.gitconfig"
