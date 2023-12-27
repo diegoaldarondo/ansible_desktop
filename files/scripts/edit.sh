@@ -6,12 +6,6 @@ declare _TEMPERATURE=.7
 declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE"
 
 format() {
-    """
-    Format the provided file according to its file type.
-
-    Args:
-        $1 (str): Path to the file to be formatted.
-    """
     local filetype
     filetype=$(file --mime-type -b "$1")
 
@@ -25,32 +19,14 @@ format() {
 }
 
 add_docstring() {
-    """
-    Add docstrings to the provided file.
-
-    Args:
-        $1 (str): Path to the file.
-    """
     sgpt --role=docstring $_GPT_PARAMS <"$1" | code -d "$1" -
 }
 
 add_type_hints() {
-    """
-    Add type hints to the provided python file.
-
-    Args:
-        $1 (str): Path to the python file.
-    """
     sgpt --role=typehint $_GPT_PARAMS <"$1" | code -d "$1" -
 }
 
 lint() {
-    """
-    Lint the provided file according to its file type.
-
-    Args:
-        $1 (str): Path to the file to be linted.
-    """
     local filetype
     filetype=$(file --mime-type -b "$1")
 
@@ -62,22 +38,10 @@ lint() {
 }
 
 improve_code() {
-    """
-    Improve the provided code.
-
-    Args:
-        $1 (str): Path to the file.
-    """
     sgpt --role=improve_code $_GPT_PARAMS <"$1" | code -d "$1" -
 }
 
 write_unit_tests() {
-    """
-    Write unit tests for the provided file.
-
-    Args:
-        $1 (str): Path to the file.
-    """
     {
         echo "Filename: $1"
         cat "$1"
@@ -85,13 +49,6 @@ write_unit_tests() {
 }
 
 develop() {
-    """
-    Develop file based on provided description.
-
-    Args:
-        $1 (str): Path to the file.
-        $2 (str): Description of the change.
-    """
     local description
     description="$2"
 
@@ -104,13 +61,6 @@ develop() {
 }
 
 general_gpt() {
-    """
-    Run GPT on the provided file with a prompt.
-
-    Args:
-        $1 (str): Path to the file.
-        $2 (str): The prompt.
-    """
     local prompt
     prompt="$2"
 
@@ -123,9 +73,6 @@ general_gpt() {
 }
 
 check_installation() {
-    """
-    Check if all of the required command line tools are installed.
-    """
     # Check if all of the required command line tools are installed
     local required_tools=("black" "isort" "autoflake" "sgpt" "code" "fdfind" "fzf" "bat" "pylint")
 
@@ -138,12 +85,6 @@ check_installation() {
 }
 
 autoedit() {
-    """
-    A function to automatically edit the provided file.
-
-    Args:
-        $1 (str): Path to the file to be edited.
-    """
     check_installation
     local file="$1"
 
