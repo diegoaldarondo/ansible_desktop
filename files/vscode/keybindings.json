@@ -152,5 +152,11 @@
                 "editor.action.clipboardPasteAction"
             ]
         }
-      }
+    },
+    // Run task when pressing ctrl+alt+shift+e
+    {
+        "key": "ctrl+alt+shift+e",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Run pyedit on active file in terminal"
+    }
 ]
