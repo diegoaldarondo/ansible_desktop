@@ -83,6 +83,17 @@ check_install() {
     done
 }
 
+general_gpt() {
+	if [ -z "$2" ]; then
+        read -p "Enter prompt: " description
+        [ -z "$prompt" ] && echo "No prompt provided." && return
+    else
+        prompt="$2"
+    fi	
+	
+	cat "$1" | sgpt --model=gpt-4 --temperature=.7 "$prompt" | code -
+}
+
 pyedit() {
     check_install
     local file
@@ -95,7 +106,7 @@ pyedit() {
 
     [ -z "$file" ] && echo "No file selected." && return
 
-    options=("Format" "Docstrings" "Develop" "Type Hints" "Lint" "Improve Code" "Write Unit Tests" "Quit")
+    options=("Format" "Docstrings" "Develop" "Type Hints" "Lint" "Improve Code" "Write Unit Tests" "General" "Quit")
     while true; do
         opt=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select an action: " --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --pointer="=>")
 
@@ -107,6 +118,7 @@ pyedit() {
             "Improve Code") improve_code "$file" ;;
             "Write Unit Tests") write_unit_tests "$file" ;;
             "Develop") develop "$file" ;;
+			"General") general_gpt "$file" ;;
             "Quit") break ;;
             *) break ;;
         esac
