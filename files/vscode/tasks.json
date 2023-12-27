@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run pyedit on active file in terminal",
+            "label": "Run autoedit on active file in terminal",
             "type": "shell",
-            "command": "source ~/.fzf.bash; source ~/.bash_aliases; pyedit ${file}",
+            "command": "source ~/.fzf.bash; source ~/.bash_aliases; autoedit ${file}",
             "problemMatcher": [],
             "presentation": {
                 "echo": false,

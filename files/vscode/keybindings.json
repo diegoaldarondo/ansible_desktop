@@ -157,6 +157,6 @@
     {
         "key": "ctrl+alt+shift+e",
         "command": "workbench.action.tasks.runTask",
-        "args": "Run pyedit on active file in terminal"
+        "args": "Run autoedit on active file in terminal"
     }
 ]
