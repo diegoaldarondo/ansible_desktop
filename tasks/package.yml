@@ -27,6 +27,7 @@
       - procmail
       - pylint
       - python3-psutil
+      - shfmt
       - tealdeer
       - texlive
       - texlive-full
