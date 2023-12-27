@@ -1,6 +1,5 @@
 {
     "name": "default",
-    "expecting": "Answer",
     "variables": {
         "shell": "bash",
         "os": "Linux/Debian GNU/Linux 12 (bookworm)"

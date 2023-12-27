@@ -1,6 +1,5 @@
 {
     "name": "shell",
-    "expecting": "Command",
     "variables": {
         "shell": "bash",
         "os": "Linux/Debian GNU/Linux 12 (bookworm)"

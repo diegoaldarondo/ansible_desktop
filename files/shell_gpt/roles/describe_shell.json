@@ -1,6 +1,5 @@
 {
     "name": "describe_shell",
-    "expecting": "Description",
     "variables": {
         "shell": "bash",
         "os": "Linux/Debian GNU/Linux 12 (bookworm)"
