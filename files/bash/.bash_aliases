@@ -49,37 +49,88 @@ ff () {
 	fi
 }
 
-polish() {
-	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
-		black "$1"
-		isort "$1"
-		autoflake --remove-all-unused-imports --in-place "$1"
-		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | sgpt --role=typehint --temperature=.7 --model=gpt-3.5-turbo | sgpt --role=docstring --temperature=.7 --model=gpt-3.5-turbo | code -d "$1" -
-		
-	else
-		echo "The file does not exist or is not a python file."
-		exit 1
-	fi
+
+pyedit() {
+    if [ ! -f "$1" ]; then
+		local file=$(fdfind -H --color=always -t f --follow -e .py . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+    else
+		local file="$1"
+    fi
+
+	[[ "$file" != *.py ]] && echo "Not a python file." && return
+
+    options=("Format" "Docstrings" "Develop" "Type Hints" "Lint" "Improve Code" "Write Unit Tests" "Quit")
+	while true; do
+		opt=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select an action: " --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --pointer="=>")
+
+		case $opt in
+			"Format")
+				format "$file"
+				;;
+			"Docstrings")
+				add_docstring "$file"
+				;;
+			"Type Hints")
+				add_type_hints "$file"
+				;;
+			"Lint")
+				lint "$file"
+				;;
+			"Improve Code")
+				improve_code "$file"
+				;;
+			"Write Unit Tests")
+				write_unit_tests "$file"
+				;;
+			"Develop")
+				develop "$file"
+				;;
+			"Quit")
+				break
+				;;
+			*)
+				break
+				;;
+		esac
+	done
+}
+
+format() {
+    black "$1"
+    isort "$1"
+    autoflake --remove-all-unused-imports --in-place "$1"
+} 
+
+add_docstring() {
+    cat "$1" | sgpt --role=docstring --model=gpt-4 --temperature=.7 | code -d "$1" -
+}
+
+add_type_hints() {
+    cat "$1" | sgpt --role=typehint --model=gpt-4 --temperature=.7 | code -d "$1" -
 }
 
 lint() {
-	if [ -f "$1" ] && [[ "$1" == *.py ]]; then
-		cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d "$1" -
-	elif [ -f "$1" ] && [[ "$(head -n 1 "$1")" == "#!/bin/bash" ]]; then
-		cat "$1" <(shellcheck "$1") | sgpt --role=shellcheck --model=gpt-4 --temperature=.7 | code -d "$1" -
-	else
-		echo "The file does not exist or is not a python file."
-		exit 1
-	fi
+    cat "$1" <(pylint "$1") | sgpt --role=pylint --model=gpt-4 --temperature=.7 | code -d "$1" -
 }
 
 improve_code() {
-	if [ -f "$1" ]; then
-		cat "$1" | sgpt --role=improve_code --model=gpt-4 --temperature=.7 | code -d "$1" -
+    cat "$1" | sgpt --role=improve_code --model=gpt-4 --temperature=.7 | code -d "$1" -
+}
+
+write_unit_tests() {
+	cat <(echo "Filename: $1"\n) "$1" | sgpt --role=UnitTestWriter --model=gpt-4 --temperature=.7 | code -
+}
+
+develop() {
+	# Ask for a description of the change using an interactive terminal prompt
+	if [ -z "$2" ]; then
+		read -p "Enter a description of the change: " description
+		[ -z "$description" ] && echo "No description provided." && return
 	else
-		echo "The file does not exist."
-		exit 1
+		description="$2"
 	fi
+
+	cat $1 | sgpt --role=developer --model=gpt-4 --temperature=.7 "$description" | code -d - $1
 }
 
 format_daily_log() {
