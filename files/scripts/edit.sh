@@ -3,7 +3,7 @@
 
 declare _MODEL=gpt-4-1106-preview
 declare _TEMPERATURE=.7
-declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE"
+declare -a _GPT_PARAMS=(--model="$_MODEL" --temperature="$_TEMPERATURE")
 
 auto_code_review() {
     local file="$1"
@@ -13,7 +13,7 @@ auto_code_review() {
         return
     fi
 
-    sgpt --role=code_review $_GPT_PARAMS <"$file" | code -
+    sgpt --role=code_review "{$_GPT_PARAMS[@]}" <"$file" | code -
 }
 
 auto_format() {
@@ -30,11 +30,11 @@ auto_format() {
 }
 
 auto_docstring() {
-    sgpt --role=docstring $_GPT_PARAMS <"$1" | code -d "$1" -
+    sgpt --role=docstring "{$_GPT_PARAMS[@]}" <"$1" | code -d "$1" -
 }
 
 auto_type_hints() {
-    sgpt --role=typehint $_GPT_PARAMS <"$1" | code -d "$1" -
+    sgpt --role=typehint "{$_GPT_PARAMS[@]}" <"$1" | code -d "$1" -
 }
 
 auto_lint() {
@@ -42,21 +42,21 @@ auto_lint() {
     filetype=$(file --mime-type -b "$1")
 
     if [[ $filetype == "text/x-python" ]]; then
-        cat "$1" <(pylint "$1") | sgpt --role=pylint $_GPT_PARAMS | code -d "$1" -
+        cat "$1" <(pylint "$1") | sgpt --role=pylint "{$_GPT_PARAMS[@]}" | code -d "$1" -
     elif [[ $filetype == "text/x-shellscript" ]]; then
-        cat "$1" <(shellcheck -f gcc "$1") | sgpt --role=shellcheck $_GPT_PARAMS | code -d "$1" -
+        cat "$1" <(shellcheck -f gcc "$1") | sgpt --role=shellcheck "{$_GPT_PARAMS[@]}" | code -d "$1" -
     fi
 }
 
 auto_improve_code() {
-    sgpt --role=improve_code $_GPT_PARAMS <"$1" | code -d "$1" -
+    sgpt --role=improve_code "{$_GPT_PARAMS[@]}" <"$1" | code -d "$1" -
 }
 
 auto_write_unit_tests() {
     {
         echo "Filename: $1"
         cat "$1"
-    } | sgpt --role=UnitTestWriter $_GPT_PARAMS | code -
+    } | sgpt --role=UnitTestWriter "{$_GPT_PARAMS[@]}" | code -
 }
 
 auto_develop() {
@@ -68,7 +68,7 @@ auto_develop() {
         [ -z "$description" ] && echo "No description provided." && return
     fi
 
-    sgpt --role=developer $_GPT_PARAMS "$description" <"$1" | code -d - "$1"
+    sgpt --role=developer "{$_GPT_PARAMS[@]}" "$description" <"$1" | code -d - "$1"
 }
 
 auto_gpt() {
@@ -80,7 +80,7 @@ auto_gpt() {
         [ -z "$prompt" ] && echo "No prompt provided." && return
     fi
 
-    sgpt $_GPT_PARAMS "$prompt" <"$1" | code -
+    sgpt "{$_GPT_PARAMS[@]}" "$prompt" <"$1" | code -
 }
 
 check_installation() {
