@@ -29,7 +29,7 @@ auto_code_review() {
 # Arguments:
 #   $1 - The file to be formatted.
 # Outputs:
-#   The formatted file.
+#   None
 auto_format() {
   local filetype
   filetype=$(file --mime-type -b "$1")
