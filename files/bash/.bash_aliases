@@ -32,7 +32,7 @@ alias gcm="gcalcli calm"
 # Miscellaneous
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
 [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
-[ -f "$HOME/ansible_desktop/files/scripts/edit.sh" ] && source "$HOME/ansible_desktop/files/scripts/edit.sh"
+[ -f "$HOME/ansible_desktop/files/scripts/autoedit.sh" ] && source "$HOME/ansible_desktop/files/scripts/autoedit.sh"
 
 # User specific functions
 sync () {
