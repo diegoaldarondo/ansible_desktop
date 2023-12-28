@@ -1,0 +1,50 @@
+- name: Check if touchcursor-linux repository exists                                                                                                                                                                                                       
+  stat:                                                                                                                                                                                                                                                    
+    path: /usr/local/src/touchcursor-linux                                                                                                                                                                                                                 
+  register: touchcursor_repo                                                                                                                                                                                                                               
+
+- name : Install touchcursor-linux 
+  block:
+  - name: Clone touchcursor-linux repository
+    become: true
+    git:
+      repo: https://github.com/donniebreve/touchcursor-linux.git
+      dest: /usr/local/src/touchcursor-linux
+      clone: yes
+      update: yes
+
+  - name: Stop service touchcursor
+    become: true
+    command:
+      cmd: systemctl stop touchcusor.service && systemctl disable touchcusor.service && rm /etc/systemd/system/touchcursor.service
+    ignore_errors: true
+    
+  - name: Compile touchcursor-linux
+    command:
+      chdir: /usr/local/src/touchcursor-linux
+      cmd: make
+    args:
+      creates: /usr/local/src/touchcursor-linux/touchcursor
+
+  - name: Make install touchcursor-linux
+    become_user: "{{ user }}"
+    command:
+      chdir: /usr/local/src/touchcursor-linux
+      cmd: make install
+    args:
+      creates: /usr/local/bin/touchcursor
+
+  - name: Make symlink for touchcursor.conf
+    become: true
+    file:
+      src: "{{ playbook_dir }}/files/touchcursor/touchcursor.conf"
+      dest: "{{ home }}/.config/touchcursor/touchcursor.conf"
+      state: link
+      force: yes
+      
+  - name: Start service touchcursor
+    become_user: "{{ user }}"
+    command:
+      cmd: systemctl --user restart touchcursor.service
+      
+  when: touchcursor_repo.stat.exists == False
