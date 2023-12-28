@@ -1,14 +1,9 @@
 customCommands:
   - key: '<f8>'
-    command: "git diff --cached | sgpt --role=commit --model=gpt-4 | git commit --file=-"
+    command: "git diff --cached | sgpt --role=commit | git commit --file=-"
     context:  "global"
     description: "Commit staged changes using sgpt"
   - key: '<f9>'
-    command: "git diff --cached | sgpt --role=commit_critic --model=gpt-4 | code -"
+    command: "git diff --cached | sgpt --role=commit_critic | code -"
     context:  "global"
     description: "Critique staged changes using sgpt"
-  # Combine the current file and the output of pylint, pipe it to sgpt, and view the diff in vscode.
-  - key: '<f10>'
-    command: "bash -c 'source ~/.bash_aliases; lint {{.SelectedFile.Name}}'"
-    context:  "global"
-    description: "Lint the current file."
