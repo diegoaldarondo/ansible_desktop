@@ -7,8 +7,8 @@ alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
 alias lc="lazycommit"
-alias gpt="sgpt --model=gpt-4 --temperature=.7"
-alias gpti="sgpt --model=gpt-4 --temperature=.7 --repl ' '"
+alias gpt="sgpt --temperature=.7"
+alias gpti="sgpt --temperature=.7 --repl ' '"
 alias task="python $HOME/notes/tasks/tasks.py"
 alias tasks="python $HOME/notes/tasks/tasks.py"
 alias random_task='grep "\[ \]" ~/notes/tasks/tasks.md | shuf -n 1 '
@@ -26,9 +26,8 @@ alias memu="python $HOME/notes/memory/memory.py update"
 alias memf="python $HOME/notes/memory/memory.py forget"
 alias meme="python $HOME/notes/memory/memory.py edit"
 alias daily="python $HOME/notes/tasks/daily.py"
-alias gc="gcalcli agenda"
-alias gcw="gcalcli calw"
-alias gcm="gcalcli calm"
+alias nvim="~/nvim-linux64/bin/nvim"
+
 
 # Miscellaneous
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
@@ -52,9 +51,9 @@ ff() {
 
 format_daily_log() {
     if [ -z "$1" ]; then
-        git log --since-as-filter="yesterday 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+        git log --since-as-filter="yesterday 23:59" | sgpt --role=format_diff_to_note --temperature=.7 | code -
     else
-        git log --since-as-filter="$1 days ago 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+        git log --since-as-filter="$1 days ago 23:59" | sgpt --role=format_diff_to_note --temperature=.7 | code -
     fi
 }
 
