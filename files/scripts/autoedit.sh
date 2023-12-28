@@ -182,7 +182,7 @@ check_installation() {
     done
 }
 
-# The main function of the edit CLI tool that orchestrates all the auto_* functions and provides a user interface for selecting files and actions.
+# The main function of the autoedit CLI tool that orchestrates all the auto_* functions and provides a user interface for selecting files and actions.
 # Globals:
 #   None
 # Arguments:
