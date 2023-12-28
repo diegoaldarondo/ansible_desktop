@@ -1,3 +1,4 @@
+#!/bin/bash
 # User specific aliases
 alias oauth="bash ~/Documents/daldarondo-openauth/daldarondo-openauth.sh &"
 alias lg="lazygit"
@@ -36,61 +37,61 @@ alias gcm="gcalcli calm"
 
 # User specific functions
 sync() {
-  git -C ~/notes pull
-  git -C ~/ansible_desktop pull
+    git -C ~/notes pull
+    git -C ~/ansible_desktop pull
 }
 
 ff() {
-  link=$(python $HOME/notes/memory/memory.py recall)
-  if [ -z "$link" ]; then
-    echo "No link found."
-  else
-    firefox "$link" &>/dev/null &
-  fi
+    link=$(python $HOME/notes/memory/memory.py recall)
+    if [ -z "$link" ]; then
+        echo "No link found."
+    else
+        firefox "$link" &>/dev/null &
+    fi
 }
 
 format_daily_log() {
-  if [ -z "$1" ]; then
-    git log --since-as-filter="yesterday 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
-  else
-    git log --since-as-filter="$1 days ago 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
-  fi
+    if [ -z "$1" ]; then
+        git log --since-as-filter="yesterday 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+    else
+        git log --since-as-filter="$1 days ago 23:59" | sgpt --role=format_diff_to_note --model=gpt-4 --temperature=.7 | code -
+    fi
 }
 
 o() {
-  local file=$(fdfind -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
-  [ -n "$file" ] && code "$file"
+    local file=$(fdfind -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+    [ -n "$file" ] && code "$file"
 }
 
 c() {
-  local folder=$(fdfind -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
-  [ -n "$folder" ] && cd "$folder"
+    local folder=$(fdfind -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
+    [ -n "$folder" ] && cd "$folder"
 }
 
 rc() {
-  rm ~/.ssh/daldarondo@login.rc.fas.harvard.edu\:22
-  ssh -fN login.rc.fas.harvard.edu
-  ssh login.rc.fas.harvard.edu
+    rm ~/.ssh/daldarondo@login.rc.fas.harvard.edu\:22
+    ssh -fN login.rc.fas.harvard.edu
+    ssh login.rc.fas.harvard.edu
 }
 
 interactive_cpu() {
-  ssh login.rc.fas.harvard.edu "tmux new-session -d -s interact 'salloc -p olveczky,shared,test,cox,unrestricted,remoteviz --mem=60000 -t 0-08:00'"
+    ssh login.rc.fas.harvard.edu "tmux new-session -d -s interact 'salloc -p olveczky,shared,test,cox,unrestricted,remoteviz --mem=60000 -t 0-08:00'"
 }
 
 get_compute_hostname() {
-  local node_hostname=$(ssh login.rc.fas.harvard.edu "squeue -au daldarondo | grep interact | awk '{print \$NF}'")
-  echo $node_hostname
+    local node_hostname=$(ssh login.rc.fas.harvard.edu "squeue -au daldarondo | grep interact | awk '{print \$NF}'")
+    echo $node_hostname
 }
 
 remote_code() {
-  local hostname=$(get_compute_hostname)
-  local folder=$(cat ~/.targets | fzf)
-  code --folder-uri vscode-remote://ssh-remote+$hostname/$folder
+    local hostname=$(get_compute_hostname)
+    local folder=$(cat ~/.targets | fzf)
+    code --folder-uri vscode-remote://ssh-remote+$hostname/$folder
 }
 
 rcode() {
-  [ -z "$(get_compute_hostname)" ] && interactive_cpu && sleep 3s
-  remote_code
+    [ -z "$(get_compute_hostname)" ] && interactive_cpu && sleep 3s
+    remote_code
 }
 
 # PATH additions
