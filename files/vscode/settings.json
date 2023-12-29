@@ -95,4 +95,5 @@
     "terminal.integrated.defaultProfile.linux": "tmux",
     "window.zoomLevel": -1,
     "editor.minimap.enabled": false,
+    "editor.cursorSurroundingLines": 100000,
 }
