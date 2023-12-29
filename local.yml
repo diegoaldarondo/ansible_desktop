@@ -48,7 +48,6 @@
     - include_tasks: tasks/virtualbox.yml
     - include_tasks: tasks/scripts.yml
     - include_tasks: tasks/uninstall.yml
-    - include_tasks: tasks/touchcursor.yml
     - include_tasks: tasks/dotfiles.yml
 
 
