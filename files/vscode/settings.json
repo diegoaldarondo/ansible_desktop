@@ -1,6 +1,6 @@
 {
 	"telemetry.telemetryLevel": "off",
-    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.colorTheme": "One Dark Pro",
     "editor.inlineSuggest.enabled": true,
     "remote.SSH.connectTimeout": 60,
     "terminal.integrated.enableMultiLinePasteWarning": false,
@@ -9,14 +9,12 @@
         "mujoco210~holy*": "~/.vscode-container/mujoco210",
     },
     "security.workspace.trust.untrustedFiles": "open",
-    "oneDarkPro.vivid": true,
     "github.copilot.enable": {
         "*": true,
         "plaintext": false,
         "markdown": true,
         "scminput": false
     },
-    "oneDarkPro.editorTheme": "One Dark Pro Darker",
     "window.menuBarVisibility": "toggle",
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
@@ -93,7 +91,9 @@
     "ansible.validation.lint.enabled": false,
     "markdown-preview-github-styles.darkTheme": "dark_dimmed",
     "terminal.integrated.defaultProfile.linux": "tmux",
-    "window.zoomLevel": -1,
     "editor.minimap.enabled": false,
     "editor.cursorSurroundingLines": 100000,
+    "markdown.preview.breaks": true,
+    "oneDarkPro.vivid": true,
+    "markdown.extension.print.theme": "dark",
 }
