@@ -221,7 +221,7 @@ function __setprompt
 	PS1+="\[${DARKGRAY}\]:\[${LIGHTGREEN}\]\w"
 
 	if [[ $EUID -ne 0 ]]; then
-		PS1+="\[${LIGHTMAGENTA}\]$\[${NOCOLOR}\] " # Normal user
+		PS1+="\[${LIGHTMAGENTA}\]>\[${NOCOLOR}\] " # Normal user
 	else
 		PS1+="\[${RED}\]>\[${NOCOLOR}\] " # Root user
 	fi
