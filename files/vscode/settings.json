@@ -11,7 +11,7 @@
     "security.workspace.trust.untrustedFiles": "open",
     "github.copilot.enable": {
         "*": true,
-        "plaintext": false,
+        "plaintext": "true",
         "markdown": true,
         "scminput": false
     },
@@ -96,4 +96,9 @@
     "markdown.preview.breaks": true,
     "oneDarkPro.vivid": true,
     "markdown.extension.print.theme": "dark",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingDelete": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoClosingComments": "never",
+    "editor.autoClosingOvertype": "never",
 }
