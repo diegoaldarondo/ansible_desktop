@@ -38,7 +38,6 @@ alias daily="python $HOME/notes/tasks/daily.py"
 
 # Change directory aliases
 alias home='cd ~'
-alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
