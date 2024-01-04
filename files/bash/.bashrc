@@ -14,6 +14,7 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+PROMPT_COMMAND='history -a'
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
@@ -114,4 +115,3 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export PATH="$PATH:/usr/local/go/bin"
-
