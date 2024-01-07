@@ -96,3 +96,12 @@
     group: "{{ user }}"
     state: link
     force: yes
+
+- name: Create symlink for .xinitrc file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/xorg/.xinitrc"
+    dest: "{{ home }}/.xinitrc"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+    force: yes
