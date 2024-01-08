@@ -30,7 +30,7 @@
     },
     {
         "command": "runCommands",
-        "key": "ctrl+alt+shift+o",
+        "key": "ctrl+k ctrl+o",
         "args": {
             "commands": [
                 "workbench.action.terminal.focus",
@@ -45,7 +45,22 @@
     },
     {
         "command": "runCommands",
-        "key": "ctrl+alt+shift+c",
+        "key": "ctrl+k ctrl+r",
+        "args": {
+            "commands": [
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "r\r\n"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "command": "runCommands",
+        "key": "ctrl+k ctrl+c",
         "args": {
             "commands": [
                 "workbench.action.terminal.focus",
