@@ -5,6 +5,8 @@
       - autoflake
       - bat
       - black
+      - clang-format
+      - cpplint
       - curl
       - dconf-cli
       - docker

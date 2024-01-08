@@ -48,6 +48,9 @@ local file="$1"
         "text/x-shellscript")
             shfmt -i 4 -ci -s -w "$file"
             ;;
+        "text/x-c++src")
+            clang-format -i "$file"
+            ;;
         *)
             echo "Unsupported filetype for auto-formatting."
             ;;
@@ -72,7 +75,10 @@ auto_docstring() {
             ;;
         "text/x-shellscript")
             sgpt --role=shellcomment $_GPT_PARAMS <"$file" | code -d "$file" -
-;;
+            ;;
+        "text/x-c++src")
+            sgpt --role=cppdocstring $_GPT_PARAMS <"$file" | code -d "$file" -
+            ;;
         *)
             echo "Unsupported filetype for adding docstrings."
             ;;
@@ -116,6 +122,9 @@ auto_lint() {
             ;;
         "text/x-shellscript")
             shellcheck -f gcc "$file" | sgpt --role=shellcheck $_GPT_PARAMS | code -d "$file" -
+            ;;
+        "text/x-c++src")
+            cpplint "$file" | sgpt --role=cpplint $_GPT_PARAMS | code -d "$file" -
             ;;
         *)
             echo "Unsupported filetype for linting."
@@ -212,6 +221,8 @@ check_installation() {
         "grep"
         "awk"
         "sed"
+        "clang-format"
+        "cpplint"
     )
 
     for tool in "${required_tools[@]}"; do
