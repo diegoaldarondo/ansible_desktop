@@ -77,7 +77,7 @@ auto_docstring() {
             sgpt --role=shellcomment $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         "text/x-c++")
-            sgpt --role=cppdocstring $_GPT_PARAMS <"$file" | code -d "$file" -
+            sgpt --role=cppcomment $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         *)
             echo "Unsupported filetype for adding docstrings."
