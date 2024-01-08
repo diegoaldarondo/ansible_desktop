@@ -118,13 +118,13 @@ auto_lint() {
 
     case $filetype in
         "text/x-python")
-            pylint "$file" | sgpt --role=pylint $_GPT_PARAMS | code -d "$file" -
+            pylint "$file" | sgpt --role=pylint $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         "text/x-shellscript")
-            shellcheck -f gcc "$file" | sgpt --role=shellcheck $_GPT_PARAMS | code -d "$file" -
+            shellcheck -f gcc "$file" | sgpt --role=shellcheck $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         "text/x-c++src")
-            cpplint "$file" | sgpt --role=cpplint $_GPT_PARAMS | code -d "$file" -
+            cpplint "$file" | sgpt --role=cpplint $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         *)
             echo "Unsupported filetype for linting."
