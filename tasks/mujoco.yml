@@ -1,0 +1,31 @@
+- name: Check if Mujoco is already installed
+  stat:
+    path: "{{ home }}/.local/mujoco"
+  register: mujoco_installed
+  ignore_errors: true
+
+- block:
+  - name: Get the latest release tag
+    shell: "curl --silent https://api.github.com/repos/google-deepmind/mujoco/releases/latest | grep '\"tag_name\":' | sed -E 's/.*\"([^\"]+)\".*/\\1/'"
+    register: tag
+    when: mujoco_installed.stat.exists == false
+
+  - name: Get the latest MuJoCo release for Linux x86_64
+    get_url:
+      url: "https://github.com/google-deepmind/mujoco/releases/download/{{ tag.stdout }}/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
+      dest: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
+    when: mujoco_installed.stat.exists == false
+
+  - name: Ensure ~/.local/mujoco directory exists
+    become_user: "{{ user }}"
+    file:
+      path: "{{ home }}/.local/mujoco"
+      state: directory
+    when: mujoco_installed.stat.exists == false
+
+  - name: Extract the MuJoCo release
+    unarchive:
+      src: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
+      dest: "{{ home }}/.local/mujoco"
+      remote_src: yes
+  when: mujoco_installed.stat.exists == false

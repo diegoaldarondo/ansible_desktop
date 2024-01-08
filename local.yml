@@ -34,6 +34,7 @@
     - include_tasks: tasks/package.yml
     - include_tasks: tasks/flatpaks.yml
     - include_tasks: tasks/firefox_extensions.yml
+    - include_tasks: tasks/mujoco.yml
     - include_tasks: tasks/fzf.yml
     - include_tasks: tasks/lazygit.yml
     - include_tasks: tasks/ripgrep.yml
@@ -49,7 +50,6 @@
     - include_tasks: tasks/scripts.yml
     - include_tasks: tasks/uninstall.yml
     - include_tasks: tasks/dotfiles.yml
-
 
       
 
