@@ -48,7 +48,7 @@ local file="$1"
         "text/x-shellscript")
             shfmt -i 4 -ci -s -w "$file"
             ;;
-        "text/x-c++src")
+        "text/x-c++")
             clang-format -i "$file"
             ;;
         *)
@@ -76,7 +76,7 @@ auto_docstring() {
         "text/x-shellscript")
             sgpt --role=shellcomment $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
-        "text/x-c++src")
+        "text/x-c++")
             sgpt --role=cppdocstring $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         *)
@@ -123,7 +123,7 @@ auto_lint() {
         "text/x-shellscript")
             shellcheck -f gcc "$file" | sgpt --role=shellcheck $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
-        "text/x-c++src")
+        "text/x-c++")
             cpplint "$file" | sgpt --role=cpplint $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         *)
@@ -239,7 +239,7 @@ check_installation() {
 # Arguments:
 #   $1 - The file to be edited.
 #   $2 - The prompt describing the change to be made.
-inline_edit() {
+auto_inline_edit() {
     local file="$1"
     local open_tag="<"
     local open_tag="${open_tag}<<"
@@ -336,7 +336,7 @@ autoedit() {
             "Develop") auto_develop "$file" ;;
             "General") auto_gpt "$file" ;;
             "Code Review") auto_code_review "$file" ;;
-            "Inline Edit") inline_edit "$file" ;;
+            "Inline Edit") auto_inline_edit "$file" ;;
             "Quit") break ;;
             *) break ;;
         esac
