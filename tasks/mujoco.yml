@@ -14,6 +14,22 @@
     get_url:
       url: "https://github.com/google-deepmind/mujoco/releases/download/{{ tag.stdout }}/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
       dest: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
+      timeout: 60
+      force: yes
+    when: mujoco_installed.stat.exists == false
+
+  - name: Download the checksum
+    get_url:
+      url: "https://github.com/google-deepmind/mujoco/releases/download/{{ tag.stdout }}/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
+      dest: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
+      timeout: 60
+      force: yes
+    when: mujoco_installed.stat.exists == false
+
+  - name: Verify the checksum
+    command: "sha256sum -c /tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
+    register: checksum_result
+    failed_when: checksum_result.rc != 0
     when: mujoco_installed.stat.exists == false
 
   - name: Ensure ~/.local/mujoco directory exists
@@ -27,5 +43,5 @@
     unarchive:
       src: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
       dest: "{{ home }}/.local/mujoco"
-      remote_src: yes
+      # remote_src: yes
   when: mujoco_installed.stat.exists == false
