@@ -33,7 +33,6 @@ alias meme="python $HOME/notes/memory/memory.py edit"
 alias task="python $HOME/notes/tasks/tasks.py"
 alias tasks="python $HOME/notes/tasks/tasks.py"
 alias random_task='grep "\[ \]" ~/notes/tasks/tasks.md | shuf -n 1 '
-alias d="bash ~/notes/dash"
 alias daily="python $HOME/notes/tasks/daily.py"
 
 # Change directory aliases
@@ -81,13 +80,21 @@ r() {
     [ -n "$file" ] && code --goto "./$file:$line"
 }
 
+O() {
+    fdfind -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>"
+}
+
 o() {
-    local file=$(fdfind -H --color=always -t f --follow . ~ | fzf --ansi --preview 'bat --color=always --theme="OneHalfDark" {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a file: " --pointer="=>")
+    local file=$(O)
     [ -n "$file" ] && code "$file"
 }
 
+C() {
+    fdfind -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>"
+}
+
 c() {
-    local folder=$(fdfind -H --color=always -t d . ~ | fzf --ansi --preview 'exa -abghHliS {}' --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt="Select a directory: " --pointer="=>")
+    local folder=$(C)
     [ -n "$folder" ] && cd "$folder"
 }
 
