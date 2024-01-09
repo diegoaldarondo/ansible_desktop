@@ -8,7 +8,6 @@
   - name: Get the latest release tag
     shell: "curl --silent https://api.github.com/repos/google-deepmind/mujoco/releases/latest | grep '\"tag_name\":' | sed -E 's/.*\"([^\"]+)\".*/\\1/'"
     register: tag
-    when: mujoco_installed.stat.exists == false
 
   - name: Get the latest MuJoCo release for Linux x86_64
     get_url:
@@ -16,7 +15,6 @@
       dest: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
       timeout: 60
       force: yes
-    when: mujoco_installed.stat.exists == false
 
   - name: Download the checksum
     get_url:
@@ -24,24 +22,21 @@
       dest: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
       timeout: 60
       force: yes
-    when: mujoco_installed.stat.exists == false
 
   - name: Verify the checksum
-    command: "sha256sum -c /tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
+    shell: "cd /tmp/ ; sha256sum mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz | sha256sum --check mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz.sha256"
     register: checksum_result
     failed_when: checksum_result.rc != 0
-    when: mujoco_installed.stat.exists == false
 
   - name: Ensure ~/.local/mujoco directory exists
     become_user: "{{ user }}"
     file:
       path: "{{ home }}/.local/mujoco"
       state: directory
-    when: mujoco_installed.stat.exists == false
 
   - name: Extract the MuJoCo release
     unarchive:
       src: "/tmp/mujoco-{{ tag.stdout }}-linux-x86_64.tar.gz"
       dest: "{{ home }}/.local/mujoco"
-      # remote_src: yes
+      remote_src: yes
   when: mujoco_installed.stat.exists == false
