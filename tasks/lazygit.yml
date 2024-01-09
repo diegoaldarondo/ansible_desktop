@@ -9,6 +9,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_{{ lazygit_release.json.tag_name | regex_replace('^v', '') }}_Linux_x86_64.tar.gz"
     dest: "{{ localbin }}/lazygit.tar.gz"
+    force: yes
     mode: '0755'
 
 - name: Extract lazygit from tar.gz
