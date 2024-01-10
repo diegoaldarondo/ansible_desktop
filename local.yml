@@ -21,6 +21,7 @@
     - virtualbox_deb_url: "https://download.virtualbox.org/virtualbox/7.0.12/virtualbox-7.0_7.0.12-159484~Debian~bookworm_amd64.deb"
     - virtualbox_deb_path: "/tmp/virtualbox.deb"
     - vault_file: vault/secrets.yml
+    - docker_install_script: "{{ playbook_dir }}/files/scripts/install_docker.sh"
 
   tasks:
     - name: Make .local/bin
@@ -32,6 +33,7 @@
   
     - include_tasks: tasks/secrets.yml
     - include_tasks: tasks/package.yml
+    - include_tasks: tasks/docker.yml
     - include_tasks: tasks/flatpaks.yml
     - include_tasks: tasks/firefox_extensions.yml
     - include_tasks: tasks/mujoco.yml

@@ -1,0 +1,12 @@
+
+- name: Check if docker is installed
+  shell: docker --version
+  register: docker_installed
+  ignore_errors: true
+
+- block:
+  - name: Install docker
+    become: true
+    shell: "bash {{ docker_install_script }}"
+    
+  when: docker_installed.rc != 0
