@@ -55,7 +55,7 @@
 - name: Create symlink for vscode settings file
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/vscode/settings.json"
-    dest: "/home/diego/.config/Code/User/settings.json"
+    dest: "{{ home }}/.config/Code/User/settings.json"
     owner: "{{ user }}"
     group: "{{ user }}"
     state: link
@@ -64,7 +64,7 @@
 - name: Create symlink for vscode keybindings file
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/vscode/keybindings.json"
-    dest: "/home/diego/.config/Code/User/keybindings.json"
+    dest: "{{ home }}/.config/Code/User/keybindings.json"
     owner: "{{ user }}"
     group: "{{ user }}"
     state: link
@@ -73,7 +73,7 @@
 - name: Create symlink for vscode tasks file
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/vscode/tasks.json"
-    dest: "/home/diego/.config/Code/User/tasks.json"
+    dest: "{{ home }}/.config/Code/User/tasks.json"
     owner: "{{ user }}"
     group: "{{ user }}"
     state: link
