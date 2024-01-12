@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains scripts and Ansible playbooks for setting up and configuring a desktop environment, specifically tailored for Debian 12 (Bookworm). It utilizes Ansible, an automation tool, to systematically install and configure various applications and settings on a local machine.
+This repository contains scripts and Ansible playbooks for setting up and configuring my development environment. It utilizes Ansible, an automation tool, to systematically install and configure various applications and settings on a local machine. 
 
 ## Repository Structure
 
@@ -29,28 +29,14 @@ This repository contains scripts and Ansible playbooks for setting up and config
    - Add your public SSH key to your GitHub account to enable SSH authentication. For more information, see [Connecting to GitHub with SSH](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
 
 3. **Configuring the Environment:**
-   - Run `bash configure.sh` to execute the Ansible playbook.
+   - Run `bash configure.sh local.yml` to install a local development environment on your machine.
+   - Run `bash configure.sh dev.yml` to install a remote development environment on your machine.
    - This will set up the specified applications and configurations on your local machine as defined in the playbook.
-
-## Features
-
-The Ansible playbook includes tasks for:
-
-- Creating a `.local/bin` directory for user-specific binaries.
-- Installing packages, flatpaks, and various tools like fzf, lazygit, ripgrep, and more.
-- Setting up Miniconda, Visual Studio Code, and other development tools.
-- Configuring GNOME settings, Apptainer, AnyDesk, VirtualBox, and managing dotfiles.
-
-## Customization
-
-Customize the playbook by editing the variables in the playbook file. Change the `user` variable to your username or modify paths and versions of tools as necessary.
 
 ## Updating Configuration
 
 To update the Ansible configuration:
 
-- Run `bash configure.sh`.
-
+- Run `bash configure.sh <local.yml|dev.yml> [ansible_playbook_options]`.
 
 *Note: Basic understanding of Ansible and bash scripting is recommended for using and modifying this repository.*
-
