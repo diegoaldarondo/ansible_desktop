@@ -22,7 +22,7 @@
         group: "{{ user }}"
   
     - include_tasks: tasks/secrets.yml
-    - include_tasks: tasks/package.yml
+    - include_tasks: tasks/dev_packages.yml
     - include_tasks: tasks/fzf.yml
     - include_tasks: tasks/lazygit.yml
     - include_tasks: tasks/ripgrep.yml

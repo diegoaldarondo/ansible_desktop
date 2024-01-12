@@ -1,0 +1,22 @@
+- name: install local packages
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: 
+    - abook
+    - dconf-cli
+    - flatpak
+    - inkscape
+    - isort
+    - isync
+    - lynx
+    - msmtp
+    - neofetch
+    - neomutt
+    - notmuch
+    - procmail
+    - texlive
+    - texlive-full
+    - urlscan
+    - urlview
+  ignore_errors: true

@@ -1,43 +1,27 @@
-- name: install packages
+- name: install dev packages
   package:
     name: "{{ item }}"
     state: present
   loop: 
-    - abook
     - autoflake
     - bat
     - black
     - clang-format
     - cpplint
     - curl
-    - dconf-cli
     - docker
     - exa
     - fd-find
-    - flatpak
     - git
     - htop
-    - inkscape
-    - isort
-    - isync
-    - lynx
-    - msmtp
     - ncdu
-    - neofetch
-    - neomutt
-    - notmuch
     - pass 
     - pipx
-    - procmail
     - pylint
     - python3-psutil
     - shfmt
     - tealdeer
-    - texlive
-    - texlive-full
     - tmux
-    - urlscan
-    - urlview
     - vlc
     - xdotool
   ignore_errors: true
