@@ -11,6 +11,7 @@
     group: "{{ user }}"
 
 - name: Install VSCode extensions
+  become_user: "{{ user }}"
   ansible.builtin.command:
     cmd: "code --install-extension {{ item }}"
   loop:
@@ -43,4 +44,3 @@
     - tomoki1207.pdf
     - twxs.cmake
     - zhuangtongfa.material-theme
-  become: no
