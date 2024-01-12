@@ -7,9 +7,6 @@
     - user: diego
     - home: "/home/{{ user }}"
     - localbin: "{{ home }}/.local/bin"
-    - github_username: diegoaldarondo
-    - ssh_key: "{{ home }}/.ssh/id_25519"
-    - ssh_key_pub: "{{ home }}/.ssh/id_25519.pub"
     - lazygit_dest: "{{ localbin }}/lazygit"
     - miniconda_script: "{{ home }}/miniconda.sh"
     - miniconda_install_dir: "{{ home }}/miniconda3"
