@@ -20,7 +20,7 @@ This repository contains scripts and Ansible playbooks for setting up and config
 ## Installation and Setup
 
 1. **Ensure Sudo Permissions:**
-   - Before running the `setup.sh` script, confirm that your user account has sudo permissions. 
+   - Confirm that your user account has sudo permissions. 
    - To add sudo permissions, log in as root with `su` and run `usermod -aG sudo <username>`.
 
 2. **Initial Setup with `setup.sh`:**
