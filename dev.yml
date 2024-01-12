@@ -1,0 +1,38 @@
+---
+- name: Install Ansible dev environment
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    - user: diego
+    - home: "/home/{{ user }}"
+    - localbin: "{{ home }}/.local/bin"
+    - lazygit_dest: "{{ localbin }}/lazygit"
+    - miniconda_script: "{{ home }}/miniconda.sh"
+    - miniconda_install_dir: "{{ home }}/miniconda3"
+    - playbook_dir: "{{ home }}/ansible_desktop"
+    - vault_file: vault/secrets.yml
+
+  tasks:
+    - name: Make .local/bin
+      file:
+        path: "{{ localbin }}"
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+  
+    - include_tasks: tasks/secrets.yml
+    - include_tasks: tasks/package.yml
+    - include_tasks: tasks/fzf.yml
+    - include_tasks: tasks/lazygit.yml
+    - include_tasks: tasks/ripgrep.yml
+    - include_tasks: tasks/miniconda.yml
+    - include_tasks: tasks/vscode.yml
+    - include_tasks: tasks/shell_gpt.yml
+    - include_tasks: tasks/scripts.yml
+    - include_tasks: tasks/dotfiles.yml
+
+      
+
+      
+      
