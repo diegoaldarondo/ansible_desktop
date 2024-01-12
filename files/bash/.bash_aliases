@@ -6,7 +6,6 @@ alias cat="bat"
 alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
-alias lc="lazycommit"
 alias nvim="~/nvim-linux64/bin/nvim"
 
 # ChatGPT
