@@ -30,7 +30,7 @@ This repository contains scripts and Ansible playbooks for setting up and config
 
 3. **Configuring the Environment:**
    - Run `bash configure.sh local.yml` to install a local development environment on your machine.
-   - Run `bash configure.sh dev.yml` to install a remote development environment on your machine.
+   - Run `bash configure.sh dev.yml` to install a remote development environment to be accessed via vscode dev containers or remote ssh.
    - This will set up the specified applications and configurations on your local machine as defined in the playbook.
 
 ## Updating Configuration
