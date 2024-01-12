@@ -4,7 +4,7 @@
   connection: local
   become: true
   vars:
-    - user: diego
+    - user: "{{ lookup('env', 'USER') }}"
     - home: "/home/{{ user }}"
     - localbin: "{{ home }}/.local/bin"
     - lazygit_dest: "{{ localbin }}/lazygit"
@@ -27,7 +27,6 @@
     - include_tasks: tasks/lazygit.yml
     - include_tasks: tasks/ripgrep.yml
     - include_tasks: tasks/miniconda.yml
-    - include_tasks: tasks/vscode.yml
     - include_tasks: tasks/shell_gpt.yml
     - include_tasks: tasks/scripts.yml
     - include_tasks: tasks/dotfiles.yml

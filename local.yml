@@ -4,7 +4,7 @@
   connection: local
   become: true
   vars:
-    - user: diego
+    - user: "{{ lookup('env', 'USER') }}"
     - home: "/home/{{ user }}"
     - localbin: "{{ home }}/.local/bin"
     - lazygit_dest: "{{ localbin }}/lazygit"
