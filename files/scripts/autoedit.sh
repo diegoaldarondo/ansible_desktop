@@ -2,7 +2,7 @@
 
 declare _MODEL=gpt-4-1106-preview
 declare _TEMPERATURE=.7
-declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE"
+declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE --no-cache"
 
 # Performs an automatic code review on a given file using the sgpt CLI tool.
 # Globals:
@@ -172,7 +172,7 @@ auto_develop() {
     local description="$2"
 
     if [[ -z $description ]]; then
-        read -r -p "Enter a description of the change: " description
+        read -re -p "Enter a description of the change: " description
         [[ -z $description ]] && echo "No description provided." && return
     fi
 
@@ -192,7 +192,7 @@ auto_gpt() {
     local prompt="$2"
 
     if [[ -z $prompt ]]; then
-        read -r -p "Enter prompt: " prompt
+        read -re -p "Enter prompt: " prompt
         [[ -z $prompt ]] && echo "No prompt provided." && return
     fi
     sgpt $_GPT_PARAMS "$prompt" <"$file" | code -
@@ -259,7 +259,7 @@ auto_inline_edit() {
     fi
 
     if [[ -z $prompt ]]; then
-        read -r -p "Enter prompt: " prompt
+        read -re -p "Enter prompt: " prompt
         [[ -z $prompt ]] && echo "No prompt provided." && return
     fi
 
@@ -322,24 +322,21 @@ autoedit() {
         "Quit"
     )
 
-    while true; do
-        local opt
-        opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
+    local opt
+    opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
 
-        case "$opt" in
-            "Format") auto_format "$file" ;;
-            "Docstrings") auto_docstring "$file" ;;
-            "Type Hints") auto_type_hints "$file" ;;
-            "Lint") auto_lint "$file" ;;
-            "Improve Code") auto_improve_code "$file" ;;
-            "Write Unit Tests") auto_write_unit_tests "$file" ;;
-            "Develop") auto_develop "$file" ;;
-            "General") auto_gpt "$file" ;;
-            "Code Review") auto_code_review "$file" ;;
-            "Inline Edit") auto_inline_edit "$file" ;;
-            "Quit") break ;;
-            *) break ;;
-        esac
-        sleep 1
-    done
+    case "$opt" in
+        "Format") auto_format "$file" ;;
+        "Docstrings") auto_docstring "$file" ;;
+        "Type Hints") auto_type_hints "$file" ;;
+        "Lint") auto_lint "$file" ;;
+        "Improve Code") auto_improve_code "$file" ;;
+        "Write Unit Tests") auto_write_unit_tests "$file" ;;
+        "Develop") auto_develop "$file" ;;
+        "General") auto_gpt "$file" ;;
+        "Code Review") auto_code_review "$file" ;;
+        "Inline Edit") auto_inline_edit "$file" ;;
+        "Quit") break ;;
+        *) break ;;
+    esac
 }
