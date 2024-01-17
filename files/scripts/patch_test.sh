@@ -2,7 +2,7 @@
 
 declare _MODEL=gpt-4-1106-preview
 declare _TEMPERATURE=.7
-declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE --no-cache"
+declare _GPT_PARAMS="--model=$_MODEL --temperature=$_TEMPERATURE"
 
 # Performs an automatic code review on a given file using the sgpt CLI tool.
 # Globals:
@@ -172,23 +172,21 @@ auto_develop() {
     local description="$2"
 
     if [[ -z $description ]]; then
-        read -re -p "Enter a description of the change: " description
+        read -r -p "Enter a description of the change: " description
         [[ -z $description ]] && echo "No description provided." && return
     fi
 
     sgpt --role=developer $_GPT_PARAMS "$description" <"$file" | code -d - "$file"
 }
 
-# Automatically applies a patch to a given file based on a description using the sgpt CLI tool.
-# The function generates a patch using the sgpt tool and then applies it to the file using the flexpatch.py script.
+# Applies a patch to a file based on a description using the sgpt CLI tool.
 # Globals:
 #   _GPT_PARAMS - Parameters to be passed to the sgpt tool.
 # Arguments:
 #   $1 - The file to be patched.
-#   $2 - The description of the change to be made. If not provided, the user is prompted to enter one.
+#   $2 - The description of the change to be made.
 # Outputs:
-#   A diff of the proposed changes is displayed using the 'code' command.
-#   If the description is not provided, the user is prompted to enter one.
+#   The patched file displayed in a diff viewer.
 auto_patch_develop() {
     local file="$1"
     local description="$2"
@@ -199,8 +197,8 @@ auto_patch_develop() {
     fi
 
     patch=$(sgpt --role=patchdeveloper $_GPT_PARAMS "$description" <"$file")
-    python $HOME/ansible_desktop/files/scripts/flexpatch.py <(echo "$patch") "$file" -o /tmp/autoedit_patchfile
-    code -d /tmp/autoedit_patchfile "$file"
+    python $HOME/ansible_desktop/files/scripts/flexpatch.py "$file" <(echo "$patch") -o /tmp/autoedit_patchfile
+    code -d "$file" /tmp/autoedit_patchfile
 }
 
 # Interactively prompts the user for a custom prompt to be processed by the sgpt CLI tool for a given file.
@@ -216,7 +214,7 @@ auto_gpt() {
     local prompt="$2"
 
     if [[ -z $prompt ]]; then
-        read -re -p "Enter prompt: " prompt
+        read -r -p "Enter prompt: " prompt
         [[ -z $prompt ]] && echo "No prompt provided." && return
     fi
     sgpt $_GPT_PARAMS "$prompt" <"$file" | code -
@@ -257,6 +255,64 @@ check_installation() {
     done
 }
 
+# Automatically applies inline edits to a given file using the sgpt CLI tool.
+# Globals:
+#   _GPT_PARAMS - Parameters to be passed to the sgpt tool.
+# Arguments:
+#   $1 - The file to be edited.
+#   $2 - The prompt describing the change to be made.
+auto_inline_edit() {
+    local file="$1"
+    local open_tag="<"
+    local open_tag="${open_tag}<<"
+    local close_tag=">"
+    local close_tag="${close_tag}>>"
+    local prompt
+    prompt="$2"
+
+    if ! grep -q "$open_tag" "$file"; then
+        echo "No open_tag found in the file."
+        return
+    fi
+
+    if ! grep -q "$close_tag" "$file"; then
+        echo "No close_tag found in the file."
+        return
+    fi
+
+    if [[ -z $prompt ]]; then
+        read -r -p "Enter prompt: " prompt
+        [[ -z $prompt ]] && echo "No prompt provided." && return
+    fi
+
+    while true; do
+        response=$(sgpt --role=inline_edit $_GPT_PARAMS "$prompt" <"$file")
+        echo "$response"
+        read -p "Do you accept these changes? (yes/no/redo): " yn
+        case $yn in
+            [Yy]*)
+                awk -v response="$response" -v open_tag="$open_tag" -v close_tag="$close_tag" '
+                $0 ~ open_tag {print response; in_block=1; next}
+                $0 ~ close_tag && in_block {in_block=0; next}
+                !in_block
+                ' "$file" >temp && mv temp "$file"
+
+                sed -i "/$close_tag/d" "$file"
+                return
+                ;;
+            [Nn]*)
+                return
+                ;;
+            [Rr]*)
+                continue
+                ;;
+            *)
+                echo "Please answer yes, no, or redo."
+                ;;
+        esac
+    done
+}
+
 # The main function of the autoedit CLI tool that orchestrates all the auto_* functions and provides a user interface for selecting files and actions.
 # Globals:
 #   None
@@ -285,24 +341,29 @@ autoedit() {
         "Write Unit Tests"
         "General"
         "Code Review"
+        "Inline Edit"
         "Quit"
     )
 
-    local opt
-    opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
+    while true; do
+        local opt
+        opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
 
-    case "$opt" in
-        "Format") auto_format "$file" ;;
-        "Docstrings") auto_docstring "$file" ;;
-        "Type Hints") auto_type_hints "$file" ;;
-        "Lint") auto_lint "$file" ;;
-        "Improve Code") auto_improve_code "$file" ;;
-        "Write Unit Tests") auto_write_unit_tests "$file" ;;
-        "Develop") auto_develop "$file" ;;
-        "Patch Develop") auto_patch_develop "$file" ;;
-        "General") auto_gpt "$file" ;;
-        "Code Review") auto_code_review "$file" ;;
-        "Quit") break ;;
-        *) break ;;
-    esac
+        case "$opt" in
+            "Format") auto_format "$file" ;;
+            "Docstrings") auto_docstring "$file" ;;
+            "Type Hints") auto_type_hints "$file" ;;
+            "Lint") auto_lint "$file" ;;
+            "Improve Code") auto_improve_code "$file" ;;
+            "Write Unit Tests") auto_write_unit_tests "$file" ;;
+            "Develop") auto_develop "$file" ;;
+            "Patch Develop") auto_patch_develop "$file" ;;
+            "General") auto_gpt "$file" ;;
+            "Code Review") auto_code_review "$file" ;;
+            "Inline Edit") auto_inline_edit "$file" ;;
+            "Quit") break ;;
+            *) break ;;
+        esac
+        sleep 1
+    done
 }
