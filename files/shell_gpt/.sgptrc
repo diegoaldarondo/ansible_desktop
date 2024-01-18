@@ -11,3 +11,7 @@ SYSTEM_ROLES=false
 DEFAULT_EXECUTE_SHELL_CMD=false
 DISABLE_STREAMING=false
 CODE_THEME=one-dark
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_FUNCTIONS_PATH=/home/diego/.config/shell_gpt/functions
+OPENAI_USE_FUNCTIONS=true
+SHOW_FUNCTIONS_OUTPUT=false
