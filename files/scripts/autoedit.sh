@@ -260,7 +260,6 @@ autoedit() {
         "Write Unit Tests"
         "General"
         "Code Review"
-        "Inline Edit"
         "Quit"
     )
 
