@@ -233,64 +233,6 @@ check_installation() {
     done
 }
 
-# Automatically applies inline edits to a given file using the sgpt CLI tool.
-# Globals:
-#   _GPT_PARAMS - Parameters to be passed to the sgpt tool.
-# Arguments:
-#   $1 - The file to be edited.
-#   $2 - The prompt describing the change to be made.
-auto_inline_edit() {
-    local file="$1"
-    local open_tag="<"
-    local open_tag="${open_tag}<<"
-    local close_tag=">"
-    local close_tag="${close_tag}>>"
-    local prompt
-    prompt="$2"
-
-    if ! grep -q "$open_tag" "$file"; then
-        echo "No open_tag found in the file."
-        return
-    fi
-
-    if ! grep -q "$close_tag" "$file"; then
-        echo "No close_tag found in the file."
-        return
-    fi
-
-    if [[ -z $prompt ]]; then
-        read -re -p "Enter prompt: " prompt
-        [[ -z $prompt ]] && echo "No prompt provided." && return
-    fi
-
-    while true; do
-        response=$(sgpt --role=inline_edit $_GPT_PARAMS "$prompt" <"$file")
-        echo "$response"
-        read -p "Do you accept these changes? (yes/no/redo): " yn
-        case $yn in
-            [Yy]*)
-                awk -v response="$response" -v open_tag="$open_tag" -v close_tag="$close_tag" '
-                $0 ~ open_tag {print response; in_block=1; next}
-                $0 ~ close_tag && in_block {in_block=0; next}
-                !in_block
-                ' "$file" >temp && mv temp "$file"
-
-                sed -i "/$close_tag/d" "$file"
-                return
-                ;;
-            [Nn]*)
-                return
-                ;;
-            [Rr]*)
-                continue
-                ;;
-            *)
-                echo "Please answer yes, no, or redo."
-                ;;
-        esac
-    done
-}
-
 # The main function of the autoedit CLI tool that orchestrates all the auto_* functions and provides a user interface for selecting files and actions.
 # Globals:
 #   None
@@ -335,7 +277,6 @@ autoedit() {
         "Develop") auto_develop "$file" ;;
         "General") auto_gpt "$file" ;;
         "Code Review") auto_code_review "$file" ;;
-        "Inline Edit") auto_inline_edit "$file" ;;
         "Quit") break ;;
         *) break ;;
     esac
