@@ -45,6 +45,11 @@ local file="$1"
             isort "$file"
             autoflake --remove-all-unused-imports --in-place "$file"
             ;;
+        "text/x-script.python")
+            black "$file"
+            isort "$file"
+            autoflake --remove-all-unused-imports --in-place "$file"
+            ;;
         "text/x-shellscript")
             shfmt -i 4 -ci -s -w "$file"
             ;;
@@ -73,6 +78,9 @@ auto_docstring() {
         "text/x-python")
             sgpt --role=docstring $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
+        "text/x-script.python")
+            sgpt --role=docstring $_GPT_PARAMS <"$file" | code -d "$file" -
+            ;;
         "text/x-shellscript")
             sgpt --role=shellcomment $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
@@ -97,11 +105,17 @@ auto_type_hints() {
     local filetype
     filetype=$(file --mime-type -b "$file")
 
-    if [[ $filetype == "text/x-python" ]]; then
-        sgpt --role=typehint $_GPT_PARAMS <"$file" | code -d "$file" -
-    else
-        echo "Type hints are only supported for Python files."
-    fi
+    case $filetype in
+        "text/x-python")
+            sgpt --role=typehint $_GPT_PARAMS <"$file" | code -d "$file" -
+            ;;
+        "text/x-script.python")
+            sgpt --role=typehint $_GPT_PARAMS <"$file" | code -d "$file" -
+            ;;
+        *)
+            echo "Unsupported filetype for adding type hints."
+            ;;
+    esac
 }
 
 # Automatically lints a given file based on its filetype using sgpt and appropriate linting tools.
@@ -118,6 +132,9 @@ auto_lint() {
 
     case $filetype in
         "text/x-python")
+            pylint "$file" | sgpt --role=pylint $_GPT_PARAMS <"$file" | code -d "$file" -
+            ;;
+        "text/x-script.python")
             pylint "$file" | sgpt --role=pylint $_GPT_PARAMS <"$file" | code -d "$file" -
             ;;
         "text/x-shellscript")
