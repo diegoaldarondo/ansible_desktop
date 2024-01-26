@@ -321,22 +321,22 @@ autoedit() {
         "Code Review"
         "Quit"
     )
-
-    local opt
-    opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
-
-    case "$opt" in
-        "Format") auto_format "$file" ;;
-        "Docstrings") auto_docstring "$file" ;;
-        "Type Hints") auto_type_hints "$file" ;;
-        "Lint") auto_lint "$file" ;;
-        "Improve Code") auto_improve_code "$file" ;;
-        "Write Unit Tests") auto_write_unit_tests "$file" ;;
-        "Develop") auto_develop "$file" ;;
-        "Patch Develop") auto_patch_develop "$file" ;;
-        "General") auto_gpt "$file" ;;
-        "Code Review") auto_code_review "$file" ;;
-        "Quit") break ;;
-        *) break ;;
-    esac
+    while true; do
+        local opt
+        opt=$(printf '%s\n' "${options[@]}" | fzf --ansi --preview-window=right:50%,border-rounded --layout=reverse --border=rounded --margin=0 --padding=1 --color=dark --prompt='Select an action: ' --pointer='>')
+        case "$opt" in
+            "Format") auto_format "$file" ;;
+            "Docstrings") auto_docstring "$file" ;;
+            "Type Hints") auto_type_hints "$file" ;;
+            "Lint") auto_lint "$file" ;;
+            "Improve Code") auto_improve_code "$file" ;;
+            "Write Unit Tests") auto_write_unit_tests "$file" ;;
+            "Develop") auto_develop "$file" ;;
+            "Patch Develop") auto_patch_develop "$file" ;;
+            "General") auto_gpt "$file" ;;
+            "Code Review") auto_code_review "$file" ;;
+            "Quit") break ;;
+            *) ;;
+        esac
+    done
 }
