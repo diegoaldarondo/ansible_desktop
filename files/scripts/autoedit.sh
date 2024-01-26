@@ -30,7 +30,7 @@ auto_code_review() {
 # Outputs:
 #   None
 auto_format() {
-local file="$1"
+    local file="$1"
     local filetype
     filetype=$(file --mime-type -b "$file")
 
@@ -129,6 +129,23 @@ auto_lint() {
     local file="$1"
     local filetype
     filetype=$(file --mime-type -b "$file")
+    # if the file is a plain text file, try to guess the filetype based on the extension
+    if [[ $filetype == "text/plain" ]]; then
+        case $file in
+            *.py)
+                filetype="text/x-python"
+                ;;
+            *.sh)
+                filetype="text/x-shellscript"
+                ;;
+            *.cpp)
+                filetype="text/x-c++"
+                ;;
+            *)
+                echo "Unsupported filetype for linting."
+                ;;
+        esac
+    fi
 
     case $filetype in
         "text/x-python")
