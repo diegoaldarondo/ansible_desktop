@@ -47,6 +47,7 @@ alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END
 [ ! -L "$HOME/.local/bin/bat" ] && ln -s /usr/bin/batcat "$HOME/.local/bin/bat"
 [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
 [ -f "$HOME/ansible_desktop/files/scripts/autoedit.sh" ] && source "$HOME/ansible_desktop/files/scripts/autoedit.sh"
+[ -f "$HOME/.xinitrc" ] && source "$HOME/.xinitrc"
 
 # User specific functions
 sync() {

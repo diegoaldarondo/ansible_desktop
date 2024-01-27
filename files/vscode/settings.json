@@ -101,4 +101,5 @@
     "editor.autoClosingQuotes": "never",
     "editor.autoClosingComments": "never",
     "editor.autoClosingOvertype": "never",
+    "keyboard.dispatch": "keyCode",
 }
