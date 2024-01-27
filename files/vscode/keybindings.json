@@ -173,5 +173,15 @@
         "key": "ctrl+k ctrl+e",
         "command": "workbench.action.tasks.runTask",
         "args": "Run autoedit on active file in terminal"
-    }
+    },
+    // Move focus to right editor
+    {
+        "key": "ctrl+k ctrl+l",
+        "command": "workbench.action.focusSecondEditorGroup"
+    },
+    // Move focus to left editor
+    {
+        "key": "ctrl+k ctrl+h",
+        "command": "workbench.action.focusFirstEditorGroup"
+    },
 ]
