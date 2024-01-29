@@ -123,6 +123,27 @@ rcode() {
     remote_code
 }
 
+act() {
+    # Function to get a list of conda environments
+    get_conda_envs() {
+        conda env list | grep -v "#" | awk '{print $1}' 
+    }
+
+    # Select environment using fzf
+    selected_env=$(get_conda_envs | fzf --height 10 --prompt "Select Conda Environment: ")
+
+    # Check if an environment was selected
+    if [ -n "$selected_env" ]; then
+        # Deactivate any active environment
+        conda deactivate > /dev/null 2>&1
+
+        # Activate the selected environment
+        source activate "$selected_env"
+    else
+        echo "No environment selected."
+    fi
+}
+
 # Extracts any archive(s) (if unp isn't installed)
 extract () {
 	for archive in $*; do
