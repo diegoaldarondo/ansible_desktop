@@ -7,6 +7,7 @@ alias ls="exa"
 alias la="exa -la"
 alias fd="fdfind"
 alias nvim="~/nvim-linux64/bin/nvim"
+alias upg="sudo apt update && sudo apt upgrade -y"
 
 # ChatGPT
 alias gpt="sgpt --temperature=.7"
