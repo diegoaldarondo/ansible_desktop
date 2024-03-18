@@ -21,6 +21,9 @@
     - GitHub.copilot-chat
     - james-yu.latex-workshop
     - ms-python.python
+    - ms-python.black-formatter
+    - ms-python.isort
+    - ms-python.pylint
     - ms-python.vscode-pylance
     - ms-toolsai.jupyter
     - ms-toolsai.jupyter-keymap
