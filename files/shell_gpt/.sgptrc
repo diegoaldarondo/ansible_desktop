@@ -15,3 +15,6 @@ OPENAI_BASE_URL=https://api.openai.com/v1
 OPENAI_FUNCTIONS_PATH=/home/diego/.config/shell_gpt/functions
 OPENAI_USE_FUNCTIONS=true
 SHOW_FUNCTIONS_OUTPUT=false
+API_BASE_URL=default
+PRETTIFY_MARKDOWN=true
+USE_LITELLM=false
