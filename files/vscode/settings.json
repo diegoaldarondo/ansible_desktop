@@ -1,6 +1,5 @@
 {
-	"telemetry.telemetryLevel": "off",
-    "workbench.colorTheme": "One Dark Pro",
+    "telemetry.telemetryLevel": "off",
     "editor.inlineSuggest.enabled": true,
     "remote.SSH.connectTimeout": 60,
     "terminal.integrated.enableMultiLinePasteWarning": false,
@@ -15,7 +14,6 @@
         "markdown": true,
         "scminput": false
     },
-    "window.menuBarVisibility": "toggle",
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
     "workbench.startupEditor": "none",
@@ -102,4 +100,24 @@
     "editor.autoClosingComments": "never",
     "editor.autoClosingOvertype": "never",
     "keyboard.dispatch": "keyCode",
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "One Dark Pro",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+    },
+    "pylint.args": [
+        "--rcfile=~/.pylintrc"
+    ],
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "black-formatter.args": [
+        "-l",
+        "100"
+    ],
 }
