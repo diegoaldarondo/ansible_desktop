@@ -6,6 +6,7 @@
     - abook
     - dconf-cli
     - flatpak
+    - gnome-shell-extension-manager
     - inkscape
     - isort
     - isync
@@ -15,8 +16,6 @@
     - neomutt
     - notmuch
     - procmail
-    - texlive
-    - texlive-full
     - urlscan
     - urlview
   ignore_errors: true
