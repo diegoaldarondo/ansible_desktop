@@ -47,3 +47,7 @@ Host astoria
 Host nas
     User fauna-it
     HostName 192.168.7.162
+
+Host fauna
+    HostName 100.87.86.21
+    User diego
