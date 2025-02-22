@@ -268,7 +268,7 @@ check_installation() {
     local required_tools=(
         "black"
         "isort"
-        "autoflake"
+        # "autoflake"
         "sgpt"
         "code"
         "fdfind"

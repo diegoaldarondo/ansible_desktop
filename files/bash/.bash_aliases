@@ -34,6 +34,9 @@ alias task="python $HOME/notes/tasks/tasks.py"
 alias tasks="python $HOME/notes/tasks/tasks.py"
 alias daily="python $HOME/notes/tasks/daily.py"
 
+# Deployment manager
+alias deploy="python /home/diego/code/deploy.py"
+
 # Change directory aliases
 alias home='cd ~'
 alias ..='cd ..'
@@ -54,6 +57,15 @@ alias cpu="grep 'cpu ' /proc/stat | awk '{usage=(\$2+\$4)*100/(\$2+\$4+\$5)} END
 sync() {
     git -C ~/notes pull
     git -C ~/ansible_desktop pull
+}
+
+killtb() {
+    kill $(pgrep "tensorboard")
+}
+
+ruffcheck() {
+    cd ~/code/fauna2
+    git diff --name-only main... | grep '\.py$' | xargs -I {} ruff check {} | grep -v '|' | grep '.py'
 }
 
 ff() {
@@ -119,6 +131,30 @@ remote_code() {
     code --folder-uri vscode-remote://ssh-remote+$hostname/$folder
 }
 
+connect_to_biped() {
+    code --folder-uri vscode-remote://ssh-remote+biped-nano//home/fauna-it/code/fauna2/projects/biped-deploy
+}
+
+connect_to_biped_dev() {
+    code --folder-uri vscode-remote://ssh-remote+biped-nano//home/fauna-it/dev/fauna2-diego/projects/biped-deploy
+}
+
+connect_to_bleecker() {
+    code --folder-uri vscode-remote://ssh-remote+bleecker//ssd/code/fauna2/
+}
+
+connect_to_bleecker_dev() {
+    code --folder-uri vscode-remote://ssh-remote+bleecker//ssd/dev/fauna2-diego
+}
+
+connect_to_astoria() {
+    code --folder-uri vscode-remote://ssh-remote+astoria//ssd/code/fauna2/
+}
+
+connect_to_astoria_dev() {
+    code --folder-uri vscode-remote://ssh-remote+astoria//ssd/dev/fauna2-diego
+}
+
 rcode() {
     [ -z "$(get_compute_hostname)" ] && interactive_cpu && sleep 3s
     remote_code
@@ -168,7 +204,152 @@ extract () {
 		fi
 	done
 }
+
+transfer_model () {
+    exported_folder=$1
+    bot_folder="/home/fauna-it/code/fauna2/projects/biped-deploy/saved_policy/him"
+    scp $exported_folder"/policy.pt"  "biped-nano:"$bot_folder
+    scp $exported_folder"/settings.json"  "biped-nano:"$bot_folder"/saved/policy/settings.json"
+}
+
+transfer_model_dev () {
+    exported_folder=$1"/exported_ckpts"
+    bot_folder="/home/fauna-it/dev/fauna2-diego/projects/biped-deploy/saved_policy/him"
+    scp $exported_folder"/policy.pt"  "biped-nano:"$bot_folder
+    scp $exported_folder"/settings.json"  "biped-nano:"$bot_folder"/saved/policy/settings.json"
+}
+
+open_tb () {
+    killtb
+    exp_dir="/mnt/nas_mnt/sim-experiments/diego/"
+    
+    # Use fzf to select multiple directories interactively
+    selected_dirs=$(ls $exp_dir | fzf --multi --bind 'ctrl-a:select-all' --prompt="Select experiment directories: ")
+    
+    # Check if any directories were selected
+    if [[ -z "$selected_dirs" ]]; then
+        echo "No directories selected. Exiting."
+        return 1
+    fi
+    
+    # Construct the TensorBoard logdir_spec argument
+    logdir_spec=""
+    for dir in $selected_dirs; do
+        logdir_name=$(basename $dir) # Use directory name as label
+        logdir_spec+="${logdir_name}:${exp_dir}${dir},"
+    done
+    
+    # Remove the trailing comma
+    logdir_spec=${logdir_spec%,}
+
+    echo "Starting TensorBoard with logdir_spec: $logdir_spec"
+
+    # Start TensorBoard with logdir_spec
+    tensorboard --logdir_spec $logdir_spec --bind_all --load_fast=false
+}
+
+exp_folder () {
+    exp_dir="/mnt/nas_mnt/sim-experiments/diego/"
+
+    # Use fzf to select multiple directories interactively
+    selected_group=$(ls $exp_dir | fzf --prompt="Select group: ")
+
+    selected_exp=$(ls $exp_dir/$selected_group | fzf --prompt="Select experiment: ")
+
+    echo "${exp_dir}${selected_group}/${selected_exp}"
+}
+
+sync_logs_to_nas() {
+    # Define source and destination directories
+    local source_dir="$HOME/code/fauna2/projects/biped-skills/logs/"
+    local dest_dir="/mnt/nas_mnt/sim-experiments/diego/"
+
+    # Log file for rsync output and errors
+    local log_file="/var/tmp/sync_logs_to_nas.log"
+
+    echo "Starting rsync operation at $(date)" >> "$log_file"
+
+    # Run rsync with appropriate options
+    rsync -avh --progress --no-g --no-times --no-perms --no-xattrs --checksum \
+            --exclude 'model_*.pt' "$source_dir" "$dest_dir" 2>> "$log_file"
+
+    # Check exit status of rsync
+    if [[ $? -eq 0 ]]; then
+        echo "Rsync operation completed successfully at $(date)" >> "$log_file"
+    else
+        echo "Rsync operation failed at $(date). Check the log file for details: $log_file" >&2
+    fi
+
+    # Sync the most recent model_X.pt files only
+    local file_list="/var/tmp/sync_logs_to_nas_files.txt"
+
+    # Create or clear the file list
+    > "$file_list"
+
+    # Iterate over each experiment directory
+    find "$source_dir" -mindepth 2 -maxdepth 2 -type d | while read -r experiment_dir; do
+        echo "Processing experiment directory: $experiment_dir" >> "$log_file"
+
+        # Find the largest model_X.pt file in the current experiment directory
+        local largest_model=$(ls "$experiment_dir"/model_*.pt 2>/dev/null | sed -E 's/.*model_([0-9]+)\.pt/\1/' | sort -n | tail -1)
+
+        if [[ -z "$largest_model" ]]; then
+            echo "No model_X.pt files found in $experiment_dir" >> "$log_file"
+        else
+            # Construct the relative path of the largest model file
+            local model_file="${experiment_dir#$source_dir}/model_${largest_model}.pt"
+            echo "Adding largest model file to list: $model_file" >> "$log_file"
+
+            # Add the largest model file to the file list
+            echo "$model_file" >> "$file_list"
+        fi
+    done
+    /usr/bin/cat "$file_list"
+    rsync -avh --progress --no-g --no-times --no-perms --no-xattrs --checksum \
+        --files-from="$file_list" "$source_dir" "$dest_dir" 2>> "$log_file"
+
+    # Check exit status of rsync
+    if [[ $? -eq 0 ]]; then
+        echo "Rsync operation completed successfully at $(date)" >> "$log_file"
+    else
+        echo "Rsync operation failed at $(date). Check the log file for details: $log_file" >&2
+    fi
+}
+
+sync_logs_to_remote_nas() {
+    # Check for hostname argument
+    if [[ -z "$1" ]]; then
+        echo "Usage: sync_logs_to_remote_nas <hostname>"
+        return 1
+    fi
+
+    local hostname="$1"
+    local remote_command="$(declare -f sync_logs_to_nas); sync_logs_to_nas"
+
+    echo "Starting remote rsync operation on $hostname"
+
+    ssh "$hostname" "bash -s" <<< "$remote_command"
+
+    if [[ $? -eq 0 ]]; then
+        echo "Remote rsync operation on $hostname completed successfully."
+    else
+        echo "Remote rsync operation on $hostname failed."
+    fi
+}
+
+synclogs() {
+    sync_logs_to_remote_nas xps2
+    sync_logs_to_remote_nas xps3
+    sync_logs_to_nas
+}
+
+test_single() {
+    python tests/test_configs.py --config $(find configs | fzf)
+}
+
 # PATH additions
 export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:$HOME/notes"
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/home/diego/code/fauna2/projects/isaaclab-him/OpenUSD/bin"
+export PYTHONPATH="/home/diego/code/fauna2/projects/isaaclab-him/OpenUSD/lib/python:$PYTHONPATH"

@@ -1,10 +1,13 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/diego/ansible_desktop
-- /home/diego/Documents/thesis
+- /home/diego/code/fauna2
+- /home/diego/code/IsaacLab
+- /home/diego/code/fauna
+- /home/diego/code/HIMLOCO
 - /home/diego/notes
 startuppopupversion: 5
 customcommandshistory:
 - ""
 hidecommandlog: false
-ignorewhitespaceindiffview: false
+ignorewhitespaceindiffview: true

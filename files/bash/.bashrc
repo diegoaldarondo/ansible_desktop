@@ -114,3 +114,10 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export PATH="$PATH:/usr/local/go/bin"
+# export PYTHONPATH="$PYTHONPATH:/home/diego/code"
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export CYCLONEDDS_URI=file:///etc/fauna/cyclone-dds-config.xml
+
+# BEGIN Ansible - mise
+eval "$(mise activate)"
+# END Ansible - mise

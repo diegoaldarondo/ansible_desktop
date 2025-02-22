@@ -1,4 +1,3 @@
-
 Host login.rc.fas.harvard.edu
     HostName login.rc.fas.harvard.edu
     User daldarondo
@@ -15,8 +14,36 @@ Host holy*
     ProxyJump login.rc.fas.harvard.edu
     User daldarondo
 
+Host bambi
+    User unitree
+    HostName 192.168.7.220
 
-    # RemoteDirectory /n/holylabs/LABS/olveczky_lab/holylfs02/Diego/code/dm/
-    # HostKeyAlgorithms +ssh-rsa
-    # PubkeyAcceptedKeyTypes +ssh-rsa
-    # AddKeysToAgent yes
+Host lambda
+    User diego
+    HostName diego-lambda-vector
+
+Host xps2
+    User diego
+    HostName diego2-XPS-8960
+
+Host xps3
+    User diego
+    HostName diego3-XPS-8960
+
+Host biped-nano
+    User fauna-it
+    HostName fauna-biped-nx
+
+Host bleecker
+    User fauna-it
+    # HostName 192.168.122.21
+    HostName fauna-agx-bleecker
+
+Host astoria
+    User fauna-it
+    # HostName 192.168.122.21
+    HostName fauna-agx-astoria
+
+Host nas
+    User fauna-it
+    HostName 192.168.7.162

@@ -7,3 +7,5 @@ customCommands:
     command: "git diff --cached | sgpt --role=commit_critic | code -"
     context:  "global"
     description: "Critique staged changes using sgpt"
+os:
+  editPreset: 'vscode'
