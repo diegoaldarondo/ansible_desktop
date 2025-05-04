@@ -12,7 +12,8 @@
         "*": true,
         "plaintext": "true",
         "markdown": true,
-        "scminput": false
+        "scminput": false,
+        "latex": true
     },
     "zenMode.centerLayout": false,
     "workbench.editor.showTabs": "single",
@@ -100,6 +101,7 @@
     "editor.autoClosingComments": "never",
     "editor.autoClosingOvertype": "never",
     "keyboard.dispatch": "keyCode",
+    "workbench.layoutControl.enabled": false,
     "window.menuBarVisibility": "toggle",
     "workbench.colorTheme": "One Dark Pro",
     "[yaml]": {
